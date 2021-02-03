@@ -6,13 +6,15 @@
  *  existing props...
  *  lineStart: {
  *    measureNum: <n>,
+ *    heightSpace: <n>,
+ *    nextLineNoteI: <n>,
  * 
  *    totalSpace: <n>,
  *    totalNotes: <n>
  *  }
  * }
  * 
- * line index = [<line start note id>...]
+ * line index = [<line start note id>..., <epsilon note id>]
  */
 const lineXSpaceAnalysis = (
   notes, measureIndex,  // the last measure is epsilon
@@ -32,7 +34,8 @@ const lineXSpaceAnalysis = (
     // if note.measureStart not exist, the note is epsilon
     if(!note.measureStart) {
       currLineStartNote.lineStart = {
-        measureNum: currMeasureNum
+        measureNum: currMeasureNum,
+        nextLineNoteI: -1
       }
       lineIndex.push(ni)
     }
@@ -49,7 +52,8 @@ const lineXSpaceAnalysis = (
         throw new Error("line space or max measure number limit too small")
       }
       currLineStartNote.lineStart = {
-        measureNum: currMeasureNum
+        measureNum: currMeasureNum,
+        nextLineNoteI: ni
       }
       currLineStartNote = note
       lineIndex.push(ni)
@@ -59,6 +63,31 @@ const lineXSpaceAnalysis = (
   }
   return [notes, lineIndex]
 }
-const lineSpaceAnalysis = () => {
-
+const lineYSpaceAnalysis = (
+  notes,
+  lineIndex,
+  minLineHeight
+) => {
+  for(const ni of lineIndex) {
+    const note = notes[ni]
+    if(note.lineStart === undefined) {
+      note.lineStart = {
+        height: minLineHeight
+      }
+    } else {
+      note.lineStart.heightSpace = minLineHeight
+    }
+  }
+  return notes;
 }
+const lineSpaceAnalysis = (
+  notes, measureIndex,
+  lineSpaceLimit,
+  maxMeasureNumInLine,
+  minLineHeight
+) => {
+  const [_0, lineIndex] = lineXSpaceAnalysis(notes, measureIndex, lineSpaceLimit, maxMeasureNumInLine);
+  const _1 = lineYSpaceAnalysis(_0, lineIndex, minLineHeight);
+  return [_1, lineIndex]
+}
+export default lineSpaceAnalysis

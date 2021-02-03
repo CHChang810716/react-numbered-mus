@@ -36,7 +36,8 @@ const measureSpaceAnalysis = (notes) => {
       totalSpace = lcm(...notesInMeasure.map( n => n.noteType ))
       notesInMeasure[0].measureStart = {
         totalSpace: totalSpace,
-        id: measureId++
+        id: measureId++,
+        nextMeasureStartI: noteI
       };
       for(const nM of notesInMeasure) {
         nM.measureSpace = totalSpace / nM.noteType
