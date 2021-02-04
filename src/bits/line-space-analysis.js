@@ -7,7 +7,7 @@
  *  lineStart: {
  *    measureNum: <n>,
  *    heightSpace: <n>,
- *    nextLineNoteI: <n>,
+ *    next: <n>,
  * 
  *    totalSpace: <n>,
  *    totalNotes: <n>
@@ -31,13 +31,13 @@ const lineXSpaceAnalysis = (
       currLineStartNote = note;
       lineIndex.push(ni)
     }
-    // if note.measureStart not exist, the note is epsilon
-    if(!note.measureStart) {
+    if(note.epsilon) {
       currLineStartNote.lineStart = {
         measureNum: currMeasureNum,
-        nextLineNoteI: -1
+        next: ni
       }
       lineIndex.push(ni)
+      break;
     }
     const tmpMN = currMeasureNum + 1;
     const tmpLS = currLineSpace + note.measureStart.totalSpace;
@@ -53,7 +53,7 @@ const lineXSpaceAnalysis = (
       }
       currLineStartNote.lineStart = {
         measureNum: currMeasureNum,
-        nextLineNoteI: ni
+        next: ni
       }
       currLineStartNote = note
       lineIndex.push(ni)
@@ -70,11 +70,7 @@ const lineYSpaceAnalysis = (
 ) => {
   for(const ni of lineIndex) {
     const note = notes[ni]
-    if(note.lineStart === undefined) {
-      note.lineStart = {
-        height: minLineHeight
-      }
-    } else {
+    if(!note.epsilon) {
       note.lineStart.heightSpace = minLineHeight
     }
   }

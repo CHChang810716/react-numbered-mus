@@ -22,7 +22,7 @@ const measureSpaceAnalysis = (notes) => {
   let noteTypePerTempo = DEFAULT_NOTE_TYPE_PRE_TEMPO;
   let notesInMeasure = [];
   let measureId = 1;
-  let measureIndex = notes.length > 0 ? [0]: [];
+  let measureIndex = [];
   for(const noteI in notes) {
     const note = notes[noteI];
     if(note.tempoPerMeasure) {
@@ -31,19 +31,21 @@ const measureSpaceAnalysis = (notes) => {
     if(note.noteTypePerTempo) {
       noteTypePerTempo = note.noteTypePerTempo;
     }
-    if(note.measureSplit) {
+    if(note.measureStart !== undefined || note.epsilon) {
       // measure space analysis
-      totalSpace = lcm(...notesInMeasure.map( n => n.noteType ))
-      notesInMeasure[0].measureStart = {
-        totalSpace: totalSpace,
-        id: measureId++,
-        nextMeasureStartI: noteI
-      };
-      for(const nM of notesInMeasure) {
-        nM.measureSpace = totalSpace / nM.noteType
+      if(notesInMeasure.length > 0) {
+        let totalSpace = lcm(...notesInMeasure.map( n => n.noteType ))
+        notesInMeasure[0].measureStart = {
+          totalSpace: totalSpace,
+          id: measureId++,
+          nextMeasureStartI: noteI
+        };
+        for(const nM of notesInMeasure) {
+          nM.measureSpace = totalSpace / nM.noteType
+        }
       }
       notesInMeasure = []
-      measureIndex.push(nodeI)
+      measureIndex.push(noteI)
     }
     notesInMeasure.push(note);
   }

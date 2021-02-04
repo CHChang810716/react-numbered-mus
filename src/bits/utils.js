@@ -12,4 +12,7 @@ const rectUnion = (rects) => {
   return res;
 }
 
+class arrayView {
+}
+
 export {rectUnion}

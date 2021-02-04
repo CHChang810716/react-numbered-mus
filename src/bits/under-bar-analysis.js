@@ -7,11 +7,12 @@
  * }
  */
 const underBarAnalysis = (notes) => {
+  // FIXME: algorithm refine
   let underBar = [false, false, false, false, false, false]
   // let lastNote = null;
   let lastUnderBarNum = 0;
   for(const note of notes) {
-    if(note.measureSplit) {
+    if(note.measureStart) {
       for(let i in underBar) {
         if(underBar[i]) {
           note.underBar.flag[i] = false;
@@ -37,3 +38,4 @@ const underBarAnalysis = (notes) => {
   }
   return notes;
 }
+export default underBarAnalysis
