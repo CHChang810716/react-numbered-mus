@@ -8,33 +8,32 @@
  */
 const underBarAnalysis = (notes) => {
   // FIXME: algorithm refine
-  let underBar = [false, false, false, false, false, false]
-  // let lastNote = null;
   let lastUnderBarNum = 0;
+  let lastNote = null;
   for(const note of notes) {
-    if(note.measureStart) {
-      for(let i in underBar) {
-        if(underBar[i]) {
-          note.underBar.flag[i] = false;
-          underBar[i] = false;
-        }
-      }
-    }
     const underBarNum = Math.floor(note.noteType / 8);
-    note.underBar.num = underBarNum
-    if(lastUnderBarNum < underBarNum) {
-      for(let i = underBarNum; i > lastUnderBarNum; i--) {
-        note.underBar.flag[i - 1] = true;
-        underBar[i - 1] = true;
-      }
-    } else if(lastUnderBarNum > underBarNum) {
-      for(let i = underBarNum; i < lastUnderBarNum; i++) {
-        note.underBar.flag[i - 1] = false;
-        underBar[i - 1] = false;
+    if(underBarNum > 0) {
+      note.underBar = {
+        num: underBarNum,
+        flag: []
       }
     }
-    // lastNote = note;
+    if(underBarNum > lastUnderBarNum) {
+      for(let i = lastUnderBarNum; i < underBarNum; i ++) {
+        note.underBar.flag[i] = 1;
+      }
+    }
+    if(underBarNum < lastUnderBarNum) {
+      for(let i = underBarNum; i < lastUnderBarNum; i ++) {
+        if(lastNote.underBar.flag[i] === undefined) {
+          lastNote.underBar.flag[i] = 0;
+        }
+        lastNote.underBar.flag[i] |= 2;
+        // note.underBar.flag[i] = 1;
+      }
+    }
     lastUnderBarNum = underBarNum;
+    lastNote = note;
   }
   return notes;
 }

@@ -12,7 +12,10 @@ const rectUnion = (rects) => {
   return res;
 }
 
-class arrayView {
+const svgDbg = {
+  strokeWidth: 1, 
+  stroke:'black', 
+  fill: 'none'
 }
 
-export {rectUnion}
+export {rectUnion, svgDbg}

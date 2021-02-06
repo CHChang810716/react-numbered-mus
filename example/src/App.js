@@ -1,22 +1,26 @@
 import React from 'react'
 import {Score} from 'react-numbered-mus'
-import 'react-numbered-mus/dist/index.css'
-const measureStart = (keyTxt, nt) => {
+const measureStart = (keyTxt, nt, octave) => {
   return {
-    keyTxt: keyTxt, noteType: nt, measureStart: true
+    keyTxt: keyTxt, noteType: nt, measureStart: true, 
+    octave: octave
   }
 }
-const normalNote = (keyTxt, nt) => {
+const normalNote = (keyTxt, nt, octave) => {
   return {
-    keyTxt: keyTxt, noteType: nt
+    keyTxt: keyTxt, noteType: nt, 
+    octave: octave
   }
 }
 const score = {
   notes: [
     measureStart(1, 4),
     normalNote(1, 4),
-    normalNote(1, 4),
-    normalNote(1, 4),
+    normalNote(1, 4, -2),
+    normalNote(1, 16, -2),
+    normalNote(1, 16, -2),
+    normalNote(1, 16, -2),
+    normalNote(1, 16, -2),
     measureStart(1, 4),
     normalNote(1, 4),
     normalNote(1, 4),
@@ -84,11 +88,11 @@ const App = () => {
     <Score 
       score={score}
       maxMeasureNumInLine={4}
-      minLineHeight={150}
-      pageCntWidth={700}
-      pageCntHeight={1200}
+      minLineHeight={75}
+      pageCntWidth={950}
+      pageCntHeight={600}
       yRate={1}
-      xRate={1}
+      xRate={170}
     />
   </div>
 }

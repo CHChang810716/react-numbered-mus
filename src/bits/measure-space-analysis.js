@@ -2,6 +2,17 @@ import {lcm} from 'mathjs'
 
 const DEFAULT_TEMPO_PRE_MEASURE = 4;
 const DEFAULT_NOTE_TYPE_PRE_TEMPO = 4;
+const weightTrans = (x, r) => {
+  if(r === undefined) r = 0.8;
+  const res = x * Math.pow(r, Math.log2(x))
+  return res;
+}
+const noteWeight = (note) => {
+  if(note.noteType === undefined) {
+    return 1;
+  }
+  return weightTrans(1/note.noteType, 0.85);
+}
 /**
  * measure begin note = {
  *  ...existing props
@@ -23,7 +34,7 @@ const measureSpaceAnalysis = (notes) => {
   let notesInMeasure = [];
   let measureId = 1;
   let measureIndex = [];
-  for(const noteI in notes) {
+  for(let noteI = 0; noteI < notes.length; noteI++) {
     const note = notes[noteI];
     if(note.tempoPerMeasure) {
       tempoPerMeasure = note.tempoPerMeasure;
@@ -34,14 +45,26 @@ const measureSpaceAnalysis = (notes) => {
     if(note.measureStart !== undefined || note.epsilon) {
       // measure space analysis
       if(notesInMeasure.length > 0) {
-        let totalSpace = lcm(...notesInMeasure.map( n => n.noteType ))
+        const totalSpace = notesInMeasure.reduce((s, note) => {
+          return s + noteWeight(note)
+        }, 0)
         notesInMeasure[0].measureStart = {
           totalSpace: totalSpace,
           id: measureId++,
-          nextMeasureStartI: noteI
+          next: noteI
         };
+        let totalWeight = 0;
+        let weights = []
         for(const nM of notesInMeasure) {
-          nM.measureSpace = totalSpace / nM.noteType
+          const w = noteWeight(nM);
+          totalWeight += w;
+          weights.push(w)
+        }
+        const sunit = totalSpace / totalWeight
+        for(const nMi in notesInMeasure) {
+          const nM = notesInMeasure[nMi]
+          const w = weights[nMi]
+          nM.measureSpace = w * sunit
         }
       }
       notesInMeasure = []

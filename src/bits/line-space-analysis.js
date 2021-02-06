@@ -42,8 +42,8 @@ const lineXSpaceAnalysis = (
     const tmpMN = currMeasureNum + 1;
     const tmpLS = currLineSpace + note.measureStart.totalSpace;
     if(
-      tmpMN < maxMeasureNumInLine && 
-      tmpLS < lineSpaceLimit
+      tmpMN <= maxMeasureNumInLine && 
+      tmpLS <= lineSpaceLimit
     ) {
       currMeasureNum = tmpMN;
       currLineSpace = tmpLS;

@@ -43,6 +43,9 @@ const notesAnalysis = (
     xRate
   }
 ) => {
+  for(let i in notes) {
+    notes[i].id = i;
+  }
   const maxLineXSpace = pageCntWidth / xRate
   const minLineYSpace = minLineHeight / yRate
   const [notes0, measureIndex] = measureSpaceAnalysis(notes);
@@ -54,8 +57,7 @@ const notesAnalysis = (
   const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace)
 
   // annotation analysis
-  // const notes3 = underBarAnalysis(notes2);
-  const notes3 = notes2
+  const notes3 = underBarAnalysis(notes2);
   return [notes3, measureIndex, lineIndex, pageIndex];
 }
 // function* makePageIter(notes) {
@@ -104,10 +106,8 @@ const Score = ({
   return <div>{
     pageIndex.map((pi, k) => <Page 
       key={k}
-      startNote={notes[pi]}
       notes={notes}
-      lineIndex={lineIndex}
-      measureIndex={measureIndex}
+      startNoteI={pi}
       cntWidth={pageCntWidth}
       cntHeight={pageCntHeight}
     />)

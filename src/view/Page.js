@@ -1,40 +1,38 @@
 import React from 'react'
-import Line from './Line'
+import {svgDbg} from '../bits/utils'
+import { pagePositionAnalysis } from '../bits/position-analysis'
+import Note from './Note'
+import { underBarStyle } from '../bits/note-utils'
+
 const Page = ({
-  startNote, 
   notes, 
-  lineIndex, 
-  measureIndex,
+  startNoteI, 
   cntWidth,
   cntHeight
 }) => {
-  if(startNote.epsilon) return null
-  const totalYSpace = lineIndex.reduce((totalYSpace, li) => {
-    const note = notes[li]
-    if(note.epsilon) return totalYSpace;
-    return totalYSpace + note.lineStart.heightSpace;
-  }, 0)
-  return <svg width={cntWidth} height={cntHeight}>
-    <rect width={cntWidth} height={cntHeight} 
-      style={{strokeWidth: 1, stroke:'black', fill: 'none'}}
-    >
-    {
-      lineIndex.map((li, k) => {
-        const note = notes[li]
-        if(note.epsilon) return null
-        return <Line 
-          key={k}
-          startNote={notes[li]}
-          notes={notes}
-          measureIndex={measureIndex}
-          cntWidth={cntWidth}
-          cntHeight={cntHeight * (
-            notes[li].lineStart.heightSpace / totalYSpace
-          )}
-        />
-      })
+  if(notes[startNoteI].epsilon) return null
+  pagePositionAnalysis(notes, startNoteI, cntWidth, cntHeight)
+  let noteViews = []
+  let k = 0;
+  for(const note of notes) {
+    if(note.epsilon) continue
+    noteViews.push(<Note key={k++} note={note} noteLayout={note.pos} />)
+    if(note.underBarsPos) {
+      for(const ub of note.underBarsPos) {
+        const [x1, x2, y ] = ub 
+        noteViews.push(<line key={k++} x1={x1} y1={y} x2={x2} y2={y} style={underBarStyle}/>)
+
+      }
     }
-    </rect>
+    if(note.measurePos) {
+      const [x, y, w, h] = note.measurePos
+      noteViews.push(<line key={k++} x1={x} y1={y} x2={x} y2={y+h} style={underBarStyle}/>)
+    }
+  }
+  return <svg width={cntWidth} height={cntHeight}>
+    <g>
+      {noteViews}
+    </g>
   </svg>
 }
 export default Page
