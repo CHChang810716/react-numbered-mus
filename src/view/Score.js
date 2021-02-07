@@ -4,6 +4,11 @@ import lineSpaceAnalysis from '../bits/line-space-analysis'
 import underBarAnalysis from '../bits/under-bar-analysis'
 import pageSpaceAnalysis from '../bits/page-space-analysis'
 import Page from './Page'
+import { pagePositionAnalysis } from '../bits/position-analysis'
+import { slurPositionAnalysis } from '../bits/slur-position-analysis'
+
+const NOTE_SIZE_RATE_SEED = 0.005263
+
 /**
  * score = {
  *  notes = [
@@ -20,6 +25,10 @@ import Page from './Page'
  *      tempoPerMeasure: 4,
  *      noteTypePerTempo: 4,
  *      baseTune: 60,
+ *      slur: {
+ *        flag: <true/false>,
+ *        id: <string>
+ *      }
  *      ... plugin
  *    }
  *  ]
@@ -33,7 +42,7 @@ import Page from './Page'
  * 
  */
 
-const notesAnalysis = (
+const notesSpaceAnalysis = (
   notes, {
     maxMeasureNumInLine, 
     minLineHeight,
@@ -60,19 +69,6 @@ const notesAnalysis = (
   const notes3 = underBarAnalysis(notes2);
   return [notes3, measureIndex, lineIndex, pageIndex];
 }
-// function* makePageIter(notes) {
-//   if(notes.length === undefined) {
-//     throw new Error("notes must be array");
-//   }
-//   const buffer = notes;
-//   if(notes.length > 1) {
-//     let note = notes[0];
-//     while(!note.epsilon) {
-//       yield note;
-//       note = buffer[note.pageStart.next]
-//     }
-//   }
-// }
 const Score = ({
   score,
   maxMeasureNumInLine, 
@@ -93,7 +89,7 @@ const Score = ({
   const [
     notes, measureIndex, 
     lineIndex, pageIndex
-  ] = notesAnalysis(
+  ] = notesSpaceAnalysis(
     score.notes,{
       maxMeasureNumInLine, 
       minLineHeight,
@@ -103,6 +99,8 @@ const Score = ({
       xRate
     }
   )
+
+  const sizeRatio = pageCntWidth * NOTE_SIZE_RATE_SEED
   return <div>{
     pageIndex.map((pi, k) => <Page 
       key={k}
@@ -110,6 +108,7 @@ const Score = ({
       startNoteI={pi}
       cntWidth={pageCntWidth}
       cntHeight={pageCntHeight}
+      sizeRatio={sizeRatio}
     />)
   }</div>
 }

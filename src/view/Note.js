@@ -4,10 +4,10 @@ import { svgDbg } from "../bits/utils";
 
 // const DEBUG_PAD = 7;
 const Note = ({note, noteLayout}) => {
-  const [keyX, keyY, ascentX, ascentY, 
+  const {keyX, keyY, ascentX, ascentY, 
     keyRect, ascentRect,
     octaveDotX, octaveDotYs, octaveDotR
-  ] = noteLayout
+   } = noteLayout
   // const debug = null;
   const debug = <rect
       x={keyRect.x} y={keyRect.y}

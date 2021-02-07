@@ -71,16 +71,16 @@ const noteLayout = (x, y, noteWidth, noteHeight, sizeRatio, octave, underBar) =>
     fsize: ascentSize
   }
   const octaveDotsRect = {
-    x: ascentX,
-    y: ascentY - ascentHeight,
-    width:  ascentWidth,
-    height: ascentHeight
+    x: octaveDotX - octaveDotR,
+    y: Math.min(...octaveDotYs) - octaveDotSp,
+    width: octaveDotR * 2,
+    height: octaveDotSp * (octaveDotYs.length - 1) + (octaveDotR * 2)
   }
-  return [
+  return {
     keyX, keyY, ascentX, ascentY, 
     keyRect, ascentRect, 
     octaveDotX, octaveDotYs, octaveDotR, octaveDotsRect
-  ]
+  }
 }
 
 const ascentSign = (ascent) => {

@@ -1,7 +1,8 @@
 import {noteLayout, underBarLayout} from './note-utils'
 
-const NOTE_SIZE_RATE_SEED = 0.005263
-
+/**
+ * note.pos = <defined in note-utils>
+ */
 const underBarPositionAnalysis = (
   kr0, kr1, level, ntSizeRatio
 ) => {
@@ -28,7 +29,7 @@ const measurePositionAnalysis = (
     const note = notes[noteI]
     const width = unitW * note.measureSpace
     const nl = noteLayout(currX, y, width, cntHeight, ntSizeRatio, note.octave, note.underBar)
-    const keyRect = nl[4]
+    const keyRect = nl.keyRect
     if(note.underBar) {
       if(note.underBar.flag) {
         const flags = note.underBar.flag
@@ -97,7 +98,8 @@ const pagePositionAnalysis = (
   notes, 
   startNoteI, 
   cntWidth,
-  cntHeight
+  cntHeight,
+  sizeRatio
 ) => {
   if(notes[startNoteI].epsilon) return null
   const endNoteI = notes[startNoteI].pageStart.next;
@@ -121,7 +123,7 @@ const pagePositionAnalysis = (
       noteI, notes,
       cntWidth, height,
       0, currHeight,
-      cntWidth * NOTE_SIZE_RATE_SEED
+      sizeRatio
     )
     currHeight += height
   }

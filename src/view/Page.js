@@ -3,15 +3,18 @@ import {svgDbg} from '../bits/utils'
 import { pagePositionAnalysis } from '../bits/position-analysis'
 import Note from './Note'
 import { underBarStyle } from '../bits/note-utils'
+import { slurPositionAnalysis } from '../bits/slur-position-analysis'
+
 
 const Page = ({
   notes, 
   startNoteI, 
   cntWidth,
-  cntHeight
+  cntHeight,
+  sizeRatio
 }) => {
   if(notes[startNoteI].epsilon) return null
-  pagePositionAnalysis(notes, startNoteI, cntWidth, cntHeight)
+  pagePositionAnalysis(notes, startNoteI, cntWidth, cntHeight, sizeRatio)
   let noteViews = []
   let k = 0;
   for(const note of notes) {
@@ -29,9 +32,11 @@ const Page = ({
       noteViews.push(<line key={k++} x1={x} y1={y} x2={x} y2={y+h} style={underBarStyle}/>)
     }
   }
+  const slurs = slurPositionAnalysis(notes, sizeRatio)
   return <svg width={cntWidth} height={cntHeight}>
     <g>
       {noteViews}
+      {slurs}
     </g>
   </svg>
 }
