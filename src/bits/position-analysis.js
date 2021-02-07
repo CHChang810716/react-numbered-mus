@@ -1,5 +1,8 @@
 import {noteLayout, underBarLayout} from './note-utils'
 
+const LINE_HEIGHT_SEED = 13;
+const LINE_X_PADDING_SEED = 5;
+const MEASURE_X_PADDING_SEED = 2.3;
 /**
  * note.pos = <defined in note-utils>
  */
@@ -19,9 +22,11 @@ const measurePositionAnalysis = (
 ) => {
   const startNote = notes[startNoteI]
   const endNoteI = startNote.measureStart.next
-  let currX = x
+  const xPadding = ntSizeRatio * MEASURE_X_PADDING_SEED;
+  const innerWidth = cntWidth - (2 * xPadding);
+  let currX = x + xPadding;
   let ubStart = []
-  const unitW = cntWidth / startNote.measureStart.totalSpace
+  const unitW = innerWidth / startNote.measureStart.totalSpace
   for(let noteI = startNoteI; 
     noteI < endNoteI;
     noteI ++
@@ -110,6 +115,8 @@ const pagePositionAnalysis = (
   ) {
     totalYSpace += notes[noteI].lineStart.heightSpace;
   }
+  const innerHeight = sizeRatio * LINE_HEIGHT_SEED;
+  const xPadding = sizeRatio * LINE_X_PADDING_SEED;
   let currHeight = 0;
   for(let noteI = startNoteI; 
     noteI < endNoteI; 
@@ -119,10 +126,11 @@ const pagePositionAnalysis = (
     const height = cntHeight * (
       note.lineStart.heightSpace / totalYSpace
     )
+    const yOffset = (height - innerHeight) / 2;
     note.linePos = linePositionAnalysis(
       noteI, notes,
-      cntWidth, height,
-      0, currHeight,
+      cntWidth - 2 * xPadding, innerHeight,
+      xPadding, currHeight + yOffset,
       sizeRatio
     )
     currHeight += height

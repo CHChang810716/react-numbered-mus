@@ -8,13 +8,13 @@ const Note = ({note, noteLayout}) => {
     keyRect, ascentRect,
     octaveDotX, octaveDotYs, octaveDotR
    } = noteLayout
-  // const debug = null;
-  const debug = <rect
-      x={keyRect.x} y={keyRect.y}
-      width={keyRect.width}
-      height={keyRect.height}
-      style={svgDbg}
-  />
+  const debug = null;
+  // const debug = <rect
+  //     x={keyRect.x} y={keyRect.y}
+  //     width={keyRect.width}
+  //     height={keyRect.height}
+  //     style={svgDbg}
+  // />
   return <g>
     {debug}
     {  

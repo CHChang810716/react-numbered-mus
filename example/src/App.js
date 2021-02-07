@@ -22,10 +22,12 @@ const score = {
     }, measureStart(1, 2)),
     normalNote(1, 8, -2),
     normalNote(1, 8, -2),
-    normalNote(1, 16, -2),
-    normalNote(1, 16, -2),
-    normalNote(1, 16, -2),
-    normalNote(1, 16, -2),
+    Object.assign({
+      ascent: 1
+    }, normalNote(1, 16, -2)),
+    normalNote(2, 16, -2),
+    normalNote(3, 16, -2),
+    normalNote(4, 16, -2),
     Object.assign({
       slur: {
         flag: false,
