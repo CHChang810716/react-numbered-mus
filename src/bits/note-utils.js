@@ -70,15 +70,16 @@ const noteLayout = (x, y, noteWidth, noteHeight, sizeRatio, octave, underBar) =>
     height: ascentHeight,
     fsize: ascentSize
   }
-  // const octaveDotsRect = {
-  //   x: ascentX,
-  //   y: ascentY - ascentHeight,
-  //   width:  ascentWidth,
-  //   height: ascentHeight
-  // }
+  const octaveDotsRect = {
+    x: ascentX,
+    y: ascentY - ascentHeight,
+    width:  ascentWidth,
+    height: ascentHeight
+  }
   return [
     keyX, keyY, ascentX, ascentY, 
-    keyRect, ascentRect, octaveDotX, octaveDotYs, octaveDotR
+    keyRect, ascentRect, 
+    octaveDotX, octaveDotYs, octaveDotR, octaveDotsRect
   ]
 }
 

@@ -14,9 +14,9 @@ const normalNote = (keyTxt, nt, octave) => {
 }
 const score = {
   notes: [
-    measureStart(1, 4),
-    normalNote(1, 4),
-    normalNote(1, 4, -2),
+    measureStart(1, 2),
+    normalNote(1, 8, -2),
+    normalNote(1, 8, -2),
     normalNote(1, 16, -2),
     normalNote(1, 16, -2),
     normalNote(1, 16, -2),
