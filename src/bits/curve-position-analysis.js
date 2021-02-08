@@ -44,7 +44,7 @@ const curvePositionAnalysis = (notes, sizeRatio, ntProp) => {
     const end = endNote.pos
     const startBR = rectUnion([start.keyRect, start.ascentRect, start.octaveDotsRect])
     const endBR = rectUnion([end.keyRect, end.ascentRect, end.octaveDotsRect])
-    const y = Math.min(startBR.y, endBR.y)
+    const y = Math.min(startBR.y, endBR.y) - (sizeRatio * 0.8)
     const [x0, y0] = [
       start.keyRect.x + (start.keyRect.width / 2), y
     ] 

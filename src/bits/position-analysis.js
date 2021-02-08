@@ -33,7 +33,13 @@ const measurePositionAnalysis = (
   ) {
     const note = notes[noteI]
     const width = unitW * note.measureSpace
-    const nl = noteLayout(currX, y, width, cntHeight, ntSizeRatio, note.octave, note.underBar)
+    const nl = noteLayout(
+      currX, y, 
+      width, cntHeight, 
+      ntSizeRatio, 
+      note.octave, note.underBar,
+      note.noteType, note.halfPoint
+    )
     const keyRect = nl.keyRect
     if(note.underBar) {
       if(note.underBar.flag) {

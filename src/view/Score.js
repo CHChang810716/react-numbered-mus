@@ -20,6 +20,7 @@ const NOTE_SIZE_RATE_SEED = 0.005263
  *      [optional]
  *      ascent: <[0, 1, 2]>, 0: b, 1: #, 2: <none> 
  *      octave: <int>,
+ *      halfPoint: <int>,
  *      curve: "start",
  *      measureStart: true, // measure start
  *      tempoPerMeasure: 4,

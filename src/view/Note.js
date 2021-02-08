@@ -1,22 +1,40 @@
 import React from "react";
-import { ascentSign } from "../bits/note-utils";
+import { ascentSign, underBarStyle } from "../bits/note-utils";
 import { svgDbg } from "../bits/utils";
 
 // const DEBUG_PAD = 7;
 const Note = ({note, noteLayout}) => {
-  const {keyX, keyY, ascentX, ascentY, 
-    keyRect, ascentRect,
-    octaveDotX, octaveDotYs, octaveDotR
-   } = noteLayout
+  const { 
+    noteRect, outRect,
+    keyX, keyY, keyRect, 
+    ascentX, ascentY, ascentRect, 
+    octaveDotX, octaveDotYs, octaveDotR, octaveDotsRect,
+    extDashXs, extDashY, extDash, 
+    halfPointXs, halfPointY, halfPointR
+  } = noteLayout
   const debug = null;
+  const debug2 = null;
   // const debug = <rect
   //     x={keyRect.x} y={keyRect.y}
   //     width={keyRect.width}
   //     height={keyRect.height}
   //     style={svgDbg}
   // />
+  // const debug = <rect
+  //     x={noteRect.x} y={noteRect.y}
+  //     width={noteRect.width}
+  //     height={noteRect.height}
+  //     style={svgDbg}
+  // />
+  // const debug2 = <rect
+  //     x={outRect.x} y={outRect.y}
+  //     width={outRect.width}
+  //     height={outRect.height}
+  //     style={svgDbg}
+  // />
   return <g>
     {debug}
+    {debug2}
     {  
       octaveDotYs.map(
         (y, i) => <circle fill="black" 
@@ -34,6 +52,22 @@ const Note = ({note, noteLayout}) => {
         ascentSign(note.ascent)
       } 
     </text>
+    {
+      extDashXs.map((x, k) => <line 
+        key={k}
+        x1={x}            y1={extDashY}
+        x2={x + extDash}  y2={extDashY}
+        style={underBarStyle}
+      />)
+    }
+    {
+      halfPointXs.map((x, k) => <circle
+        key={k}
+        fill="black"
+        r={halfPointR}
+        cx={x} cy={halfPointY}
+      />)
+    }
   </g>
 }
 export default Note
