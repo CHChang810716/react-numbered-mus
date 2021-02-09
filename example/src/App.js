@@ -89,10 +89,14 @@ const score = {
     normalNote(1, 4),
     normalNote(1, 4),
     normalNote(1, 4),
+    {
+      skipMeasures: 10,
+      measureStart: true
+    },
     measureStart(1, 4),
     normalNote(1, 4),
     normalNote(1, 4),
-    normalNote(1, 4)
+    normalNote(1, 4),
   ]
 }
 const App = () => {

@@ -12,6 +12,7 @@ const NOTE_SIZE_RATE_SEED = 0.005263
 /**
  * score = {
  *  notes = [
+ *    // normal note
  *    {
  *      [must]
  *      keyTxt: <[0-7]>,
@@ -31,6 +32,11 @@ const NOTE_SIZE_RATE_SEED = 0.005263
  *        id: <string>
  *      }
  *      ... plugin
+ *    }
+ *    // skip measures notation
+ *    {
+ *      skipMeasures: <n>,
+ *      measureStart: true
  *    }
  *  ]
  * }

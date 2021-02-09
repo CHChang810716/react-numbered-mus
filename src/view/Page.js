@@ -5,6 +5,7 @@ import Note from './Note'
 import { underBarStyle } from '../bits/note-utils'
 import { slurPositionAnalysis } from '../bits/slur-position-analysis'
 import { tiePositionAnalysis } from '../bits/tie-position-analysis'
+import SkipMeasures from './SkipMeasures'
 
 
 const Page = ({
@@ -20,7 +21,9 @@ const Page = ({
   let k = 0;
   for(const note of notes) {
     if(note.epsilon) continue
-    noteViews.push(<Note key={k++} note={note} noteLayout={note.pos} />)
+    if(note.noteType) {
+      noteViews.push(<Note key={k++} note={note} noteLayout={note.pos} />)
+    }
     if(note.underBarsPos) {
       for(const ub of note.underBarsPos) {
         const [x1, x2, y ] = ub 
@@ -35,6 +38,9 @@ const Page = ({
     if(note.lineStart) {
       const [x, y, w, h] = note.measurePos
       noteViews.push(<line key={k++} x1={x} y1={y} x2={x} y2={y+h} style={underBarStyle}/>)
+    }
+    if(note.skipMeasures !== undefined) {
+      noteViews.push(<SkipMeasures key={k++} note={note} sizeRatio={sizeRatio}/>)
     }
   }
   const slurs = slurPositionAnalysis(notes, sizeRatio)
