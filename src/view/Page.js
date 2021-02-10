@@ -6,6 +6,7 @@ import { underBarStyle } from '../bits/note-utils'
 import { slurPositionAnalysis } from '../bits/slur-position-analysis'
 import { tiePositionAnalysis } from '../bits/tie-position-analysis'
 import SkipMeasures from './SkipMeasures'
+import MeasureID from './MeasureID'
 
 
 const Page = ({
@@ -34,6 +35,7 @@ const Page = ({
     if(note.measurePos) {
       const [x, y, w, h] = note.measurePos
       noteViews.push(<line key={k++} x1={x+w} y1={y} x2={x+w} y2={y+h} style={underBarStyle}/>)
+      noteViews.push(<MeasureID note={note} sizeRatio={sizeRatio} />)
     }
     if(note.lineStart) {
       const [x, y, w, h] = note.measurePos

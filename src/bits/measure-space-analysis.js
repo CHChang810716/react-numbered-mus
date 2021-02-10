@@ -50,9 +50,14 @@ const measureSpaceAnalysis = (notes) => {
         }, 0)
         notesInMeasure[0].measureStart = {
           totalSpace: totalSpace,
-          id: measureId++,
+          id: measureId,
           next: noteI
         };
+        if(notesInMeasure[0].skipMeasures) {
+          measureId += notesInMeasure[0].skipMeasures
+        } else {
+          measureId ++;
+        }
         let totalWeight = 0;
         let weights = []
         for(const nM of notesInMeasure) {
