@@ -13,9 +13,9 @@ const ASCENT_HEIGHT_SEED            = ASCENT_SIZE_SEED * 0.713;
 const ASCENT_WIDTH_SEED             = ASCENT_SIZE_SEED * 0.54;
 const ASCENT_X_SEED                 = -1.7  ;
 const ASCENT_Y_SEED                 = -1.9  ;
-const EXT_DASH_SEED                 =  3.0  ;
+const EXT_DASH_SEED                 =  2.9  ;
 const EXT_DASH_Y_SEED               =  -(FONT_HEIGHT_SEED / 2)  ;
-const EXT_DASH_SP_SEED              =  6.0  ;
+const EXT_DASH_SP_SEED              =  3.7  ;
 const HALF_POINT_R_SEED             = FONT_SIZE_SEED * 0.1  
 
 const extAnalysis = (noteType) => {

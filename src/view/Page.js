@@ -35,7 +35,7 @@ const Page = ({
     if(note.measurePos) {
       const [x, y, w, h] = note.measurePos
       noteViews.push(<line key={k++} x1={x+w} y1={y} x2={x+w} y2={y+h} style={underBarStyle}/>)
-      noteViews.push(<MeasureID note={note} sizeRatio={sizeRatio} />)
+      noteViews.push(<MeasureID key={k++} note={note} sizeRatio={sizeRatio} />)
     }
     if(note.lineStart) {
       const [x, y, w, h] = note.measurePos

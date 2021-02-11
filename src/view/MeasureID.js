@@ -10,7 +10,7 @@ const MeasureID = ({note, sizeRatio}) => {
     return <text 
        fontSize={sizeRatio * MEASURE_ID_SIZE_SEED} 
        x={x} y={y + (sizeRatio * MEASURE_ID_Y_OFFSET_SEED)}
-       text-anchor="middle"
+       textAnchor="middle"
      >
        {note.measureStart.id}
      </text>

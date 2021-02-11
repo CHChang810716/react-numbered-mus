@@ -1,6 +1,8 @@
 import React from 'react'
 import { rectUnion } from './utils';
-const CURVE_SEED = 5;
+const CURVE_SEED = 0.026;
+const OVERFLOW_SEED = 30;
+const TOP_SHIFT_SEED = 0.8;
 const bezierCurve = (x0, y0, x1, y1, sx0, sy0, sx1, sy1) => {
   return <path 
     d={`M${x0} ${y0} C ${sx0} ${sy0}, ${sx1} ${sy1}, ${x1} ${y1}`} 
@@ -8,55 +10,77 @@ const bezierCurve = (x0, y0, x1, y1, sx0, sy0, sx1, sy1) => {
     fill="transparent"
   />
 }
-const plotCurve = (x0, y0, x1, y1, sizeRatio) => {
-  const sy0 = y0 - (CURVE_SEED * sizeRatio);
-  const sy1 = y1 - (CURVE_SEED * sizeRatio);
+const PlotCurve = ({x0, y0, x1, y1, sizeRatio}) => {
+  const f = x1 - x0;
+  const sy0 = y0 - (f * CURVE_SEED * sizeRatio);
+  const sy1 = y1 - (f * CURVE_SEED * sizeRatio);
   return bezierCurve(x0, y0, x1, y1, x0, sy0, x1, sy1)
 }
 const curvePositionAnalysis = (notes, sizeRatio, ntProp) => {
+  const topShift = TOP_SHIFT_SEED * sizeRatio
   let plot = []
   let index = {}
-  let lineid = -1;
+  let currLineNote = null;
   for(let i = 0; i < notes.length; i ++) {
     const note = notes[i]
-    if(note.lineStart) lineid ++;
+    if(note.lineStart) currLineNote = note;
     const curve = note[ntProp]
     if(curve === undefined) continue
-    if(curve.flag) {
-      index[curve.id] = {
-        startNote: note,
-        startLine: lineid
+    for(const id of curve) {
+      if(index[id] === undefined) {
+        // start
+        index[id] = {
+          startNote: note,
+          startLine: currLineNote
+        }
+      } else {
+        // end
+        const ent = index[id]
+        ent.endNote = note
+        ent.endLine = currLineNote
       }
-    } else {
-      const ent = index[curve.id]
-      ent.endNote = note
-      ent.endLine = lineid
     }
   }
+  let k = 0
   for(const curveID in index) {
     const {startNote, endNote, startLine, endLine} = index[curveID]
-    if(startLine !== endLine) {
-      // TODO: cross line curve
-      console.warn("currently not support cross line curve")
-      continue;
-    }
     const start = startNote.pos
     const end = endNote.pos
     const startBR = rectUnion([start.keyRect, start.ascentRect, start.octaveDotsRect])
-    const endBR = rectUnion([end.keyRect, end.ascentRect, end.octaveDotsRect])
-    const y = Math.min(startBR.y, endBR.y) - (sizeRatio * 0.8)
-    const [x0, y0] = [
-      start.keyRect.x + (start.keyRect.width / 2), y
-    ] 
-    const [x1, y1] = [
-      end.keyRect.x + (end.keyRect.width / 2), y
-    ] 
-    plot.push(
-      plotCurve(
-        x0, y0, x1, y1,
-        sizeRatio
-      )
-    )
+    const x0 = start.keyRect.x + (start.keyRect.width / 2)
+    const x1 = end.keyRect.x + (end.keyRect.width / 2)
+    if(startLine !== endLine) {
+      {
+        const [lx, ly, lw, lh] = startLine.linePos;
+        const x = lx + lw + (OVERFLOW_SEED * sizeRatio)
+        const y = start.keyRect.y - topShift
+        plot.push(<PlotCurve key={k++} 
+          x0={x0} y0={y}
+          x1={x} y1={y} sizeRatio={sizeRatio}
+        />)
+      }
+      {
+        const [lx, ly, lw, lh] = endLine.linePos;
+        const x = lx - (OVERFLOW_SEED * sizeRatio)
+        const y = end.keyRect.y - topShift
+        plot.push(<PlotCurve key={k++} 
+          x0={x} y0={y}
+          x1={x1} y1={y} sizeRatio={sizeRatio}
+        />)
+      }
+      continue;
+    } else {
+      const endBR = rectUnion([end.keyRect, end.ascentRect, end.octaveDotsRect])
+      const y = Math.min(startBR.y, endBR.y) - topShift
+      const y0 = y
+      const x1 = end.keyRect.x + (end.keyRect.width / 2)
+      const y1 = y
+      plot.push(<PlotCurve key={k++} 
+        x0={x0} y0={y0} 
+        x1={x1} y1={y1} sizeRatio={sizeRatio} 
+      />)
+
+    }
   }
   return plot
   

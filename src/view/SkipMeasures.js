@@ -33,7 +33,7 @@ const SkipMeasures = ({note, sizeRatio}) => {
     <text 
       x={midX} y={midY + (SM_TXT_Y_SEED * sizeRatio)}
       fontSize={keyRect.fsize}
-      text-anchor="middle"
+      textAnchor="middle"
     >
       { note.skipMeasures }
     </text>
