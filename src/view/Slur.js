@@ -1,6 +1,6 @@
-import { curvePositionAnalysis } from "./curve-position-analysis"
+import { curvePositionAnalysis } from "../bits/curve-position-analysis"
 
-const slurPositionAnalysis = (notes, sizeRatio) => {
+const Slur = ({notes, sizeRatio}) => {
   const curveIter = curvePositionAnalysis(notes, sizeRatio, "slur")
   const res = []
   let elem = curveIter.next()
@@ -11,4 +11,4 @@ const slurPositionAnalysis = (notes, sizeRatio) => {
   return res;
 }
 
-export {slurPositionAnalysis}
+export default Slur

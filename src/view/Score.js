@@ -30,7 +30,13 @@ const NOTE_SIZE_RATE_SEED = 0.005263
  *      slur: {
  *        flag: <true/false>,
  *        id: <string>
- *      }
+ *      },
+ *      apg: [{
+ *        keyTxt: 2,
+ *        noteType: 8,
+ *        octave: 1,
+ *        ascent: 0 
+ *      }]
  *      ... plugin
  *    }
  *    // skip measures notation

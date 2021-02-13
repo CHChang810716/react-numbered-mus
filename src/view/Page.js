@@ -7,6 +7,10 @@ import { slurPositionAnalysis } from '../bits/slur-position-analysis'
 import { tiePositionAnalysis } from '../bits/tie-position-analysis'
 import SkipMeasures from './SkipMeasures'
 import MeasureID from './MeasureID'
+import Appoggiatura from './Appoggiatura'
+import Slur from './Slur'
+import Tie from './Tie'
+import Triplet from './Triplet'
 
 
 const Page = ({
@@ -44,14 +48,20 @@ const Page = ({
     if(note.skipMeasures !== undefined) {
       noteViews.push(<SkipMeasures key={k++} note={note} sizeRatio={sizeRatio}/>)
     }
+    if(note.apg) {
+      noteViews.push(<Appoggiatura 
+        note={note} sizeRatio={sizeRatio}
+      />)
+    }
   }
-  const slurs = slurPositionAnalysis(notes, sizeRatio)
-  const ties = tiePositionAnalysis(notes, sizeRatio)
+  noteViews = noteViews.concat(<Slur notes={notes} sizeRatio={sizeRatio} />)
+  noteViews = noteViews.concat(<Tie notes={notes} sizeRatio={sizeRatio} />)
+  noteViews = noteViews.concat(<Triplet notes={notes} sizeRatio={sizeRatio} />)
+  // const slurs = slurPositionAnalysis(notes, sizeRatio)
+  // const ties = tiePositionAnalysis(notes, sizeRatio)
   return <svg width={cntWidth} height={cntHeight}>
     <g>
       {noteViews}
-      {slurs}
-      {ties}
     </g>
   </svg>
 }

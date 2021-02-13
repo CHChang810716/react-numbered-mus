@@ -1,3 +1,4 @@
+import React from 'react'
 const rectUnion = (rects) => {
   const res = rects.reduce((r, pr) => {
     let x = Math.min(r.x, pr.x)
@@ -18,4 +19,8 @@ const svgDbg = {
   fill: 'none'
 }
 
-export {rectUnion, svgDbg}
+const QCurve = ({p0, p1, qp}) => {
+  return <path d={`M${p0[0]} ${p0[1]} Q ${qp[0]} ${qp[1]} ${p1[0]} ${p1[1]}`} stroke="black" fill="transparent" />
+}
+
+export {rectUnion, svgDbg, QCurve}

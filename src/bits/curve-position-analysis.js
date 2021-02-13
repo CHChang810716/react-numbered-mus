@@ -16,7 +16,7 @@ const PlotCurve = ({x0, y0, x1, y1, sizeRatio}) => {
   const sy1 = y1 - (f * CURVE_SEED * sizeRatio);
   return bezierCurve(x0, y0, x1, y1, x0, sy0, x1, sy1)
 }
-const curvePositionAnalysis = (notes, sizeRatio, ntProp) => {
+function* curvePositionAnalysis(notes, sizeRatio, ntProp) {
   const topShift = TOP_SHIFT_SEED * sizeRatio
   let plot = []
   let index = {}
@@ -54,19 +54,19 @@ const curvePositionAnalysis = (notes, sizeRatio, ntProp) => {
         const [lx, ly, lw, lh] = startLine.linePos;
         const x = lx + lw + (OVERFLOW_SEED * sizeRatio)
         const y = start.keyRect.y - topShift
-        plot.push(<PlotCurve key={k++} 
+        yield <PlotCurve key={k++} 
           x0={x0} y0={y}
           x1={x} y1={y} sizeRatio={sizeRatio}
-        />)
+        />
       }
       {
         const [lx, ly, lw, lh] = endLine.linePos;
         const x = lx - (OVERFLOW_SEED * sizeRatio)
         const y = end.keyRect.y - topShift
-        plot.push(<PlotCurve key={k++} 
+        yield <PlotCurve key={k++} 
           x0={x} y0={y}
           x1={x1} y1={y} sizeRatio={sizeRatio}
-        />)
+        />
       }
       continue;
     } else {
@@ -75,15 +75,13 @@ const curvePositionAnalysis = (notes, sizeRatio, ntProp) => {
       const y0 = y
       const x1 = end.keyRect.x + (end.keyRect.width / 2)
       const y1 = y
-      plot.push(<PlotCurve key={k++} 
+      yield <PlotCurve key={k++} 
         x0={x0} y0={y0} 
         x1={x1} y1={y1} sizeRatio={sizeRatio} 
-      />)
+      />
 
     }
   }
-  return plot
-  
 }
 
 export {curvePositionAnalysis}

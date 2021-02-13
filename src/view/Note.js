@@ -12,21 +12,21 @@ const Note = ({note, noteLayout}) => {
     extDashXs, extDashY, extDash, 
     halfPointXs, halfPointY, halfPointR
   } = noteLayout
-  const debug = null;
-  const debug2 = null;
-  // const debug = <rect
+  let debug = null;
+  let debug2 = null;
+  // debug = <rect
   //     x={keyRect.x} y={keyRect.y}
   //     width={keyRect.width}
   //     height={keyRect.height}
   //     style={svgDbg}
   // />
-  // const debug = <rect
+  // debug = <rect
   //     x={noteRect.x} y={noteRect.y}
   //     width={noteRect.width}
   //     height={noteRect.height}
   //     style={svgDbg}
   // />
-  // const debug2 = <rect
+  // debug2 = <rect
   //     x={outRect.x} y={outRect.y}
   //     width={outRect.width}
   //     height={outRect.height}

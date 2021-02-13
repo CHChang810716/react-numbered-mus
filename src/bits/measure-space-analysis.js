@@ -1,4 +1,3 @@
-import {lcm} from 'mathjs'
 
 const DEFAULT_TEMPO_PRE_MEASURE = 4;
 const DEFAULT_NOTE_TYPE_PRE_TEMPO = 4;

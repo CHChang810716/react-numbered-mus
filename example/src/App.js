@@ -31,7 +31,14 @@ const score = {
     normalNote(1, 4, 2, {
       slur: [2]
     }),
-    normalNote(1, 4),
+    normalNote(1, 4, 0, {
+      apg: [{
+        keyTxt: 2,
+        octave: 1,
+        ascent: 0
+      }
+    ]
+    }),
     normalNote(1, 4),
     measureStart(1, 4),
     normalNote(1, 4),
@@ -43,8 +50,16 @@ const score = {
     normalNote(1, 4),
     measureStart(1, 1),
     measureStart(1, 4),
-    normalNote(1, 4),
-    normalNote(1, 4),
+    normalNote(1, 12, 0, {
+      triplet: [3]
+    }),
+    normalNote(1, 12),
+    normalNote(1, 12, 0, {
+      triplet: [3]
+    }),
+    normalNote(1, 12),
+    normalNote(1, 12),
+    normalNote(1, 12),
     normalNote(1, 4),
     measureStart(1, 4),
     normalNote(1, 4),
