@@ -1,7 +1,7 @@
 import { curvePositionAnalysis } from "../bits/curve-position-analysis"
 
-const Tie = ({notes, sizeRatio}) => {
-  const curveIter = curvePositionAnalysis(notes, sizeRatio, "tie")
+const Tie = ({notes, startNoteI, endNoteI, sizeRatio}) => {
+  const curveIter = curvePositionAnalysis(notes, startNoteI, endNoteI, sizeRatio, "tie")
   const res = []
   let elem = curveIter.next()
   while(!elem.done) {

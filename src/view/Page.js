@@ -3,8 +3,6 @@ import {svgDbg} from '../bits/utils'
 import { pagePositionAnalysis } from '../bits/position-analysis'
 import Note from './Note'
 import { underBarStyle } from '../bits/note-utils'
-import { slurPositionAnalysis } from '../bits/slur-position-analysis'
-import { tiePositionAnalysis } from '../bits/tie-position-analysis'
 import SkipMeasures from './SkipMeasures'
 import MeasureID from './MeasureID'
 import Appoggiatura from './Appoggiatura'
@@ -24,7 +22,9 @@ const Page = ({
   pagePositionAnalysis(notes, startNoteI, cntWidth, cntHeight, sizeRatio)
   let noteViews = []
   let k = 0;
-  for(const note of notes) {
+  const endNoteI = notes[startNoteI].pageStart.next
+  for(let i = startNoteI; i < endNoteI; i ++) {
+    const note = notes[i]
     if(note.epsilon) continue
     if(note.noteType) {
       noteViews.push(<Note key={k++} note={note} noteLayout={note.pos} />)
@@ -49,16 +49,23 @@ const Page = ({
       noteViews.push(<SkipMeasures key={k++} note={note} sizeRatio={sizeRatio}/>)
     }
     if(note.apg) {
-      noteViews.push(<Appoggiatura 
+      noteViews.push(<Appoggiatura key={k++} 
         note={note} sizeRatio={sizeRatio}
       />)
     }
   }
-  noteViews = noteViews.concat(<Slur notes={notes} sizeRatio={sizeRatio} />)
-  noteViews = noteViews.concat(<Tie notes={notes} sizeRatio={sizeRatio} />)
-  noteViews = noteViews.concat(<Triplet notes={notes} sizeRatio={sizeRatio} />)
-  // const slurs = slurPositionAnalysis(notes, sizeRatio)
-  // const ties = tiePositionAnalysis(notes, sizeRatio)
+  noteViews = noteViews.concat(<Slur    key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Tie     key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Triplet key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
   return <svg width={cntWidth} height={cntHeight}>
     <g>
       {noteViews}

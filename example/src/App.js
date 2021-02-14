@@ -115,12 +115,10 @@ const App = () => {
   return <div className="App">
     <Score 
       score={score}
-      maxMeasureNumInLine={4}
-      minLineHeight={75}
       pageCntWidth={950}
-      pageCntHeight={670}
-      yRate={1}
-      xRate={170}
+      pageCntHeight={400}
+      maxLineWeight={5.6}
+      size={5} 
     />
   </div>
 }

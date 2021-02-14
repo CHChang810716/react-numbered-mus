@@ -163,7 +163,6 @@ const noteLayout = (
     halfPointXs, halfPointY, halfPointR
   }
 }
-
 const ascentSign = (ascent) => {
   if(ascent === undefined) return null
   return KEY_ASCENT_SIGN[ascent]
@@ -173,5 +172,31 @@ const underBarStyle = {
   strokeWidth: 1
 }
 
-export {noteLayout, ascentSign, underBarStyle, underBarLayout}
+const curveIndex = (notes, ntProp) => {
+  let currLineNote = null;
+  let index = {}
+  for(let i = 0; i < notes.length; i ++) {
+    const note = notes[i]
+    if(note.lineStart) currLineNote = note;
+    const curve = note[ntProp]
+    if(curve === undefined) continue
+    for(const id of curve) {
+      if(index[id] === undefined) {
+        // start
+        index[id] = {
+          startNote: note,
+          startLine: currLineNote
+        }
+      } else {
+        // end
+        const ent = index[id]
+        ent.endNote = note
+        ent.endLine = currLineNote
+      }
+    }
+  }
+  return index
+}
+
+export {noteLayout, ascentSign, underBarStyle, underBarLayout, curveIndex}
 

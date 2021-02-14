@@ -18,8 +18,7 @@
  */
 const lineXSpaceAnalysis = (
   notes, measureIndex,  // the last measure is epsilon
-  lineSpaceLimit,
-  maxMeasureNumInLine
+  lineSpaceLimit
 ) => {
   let currMeasureNum = 0;
   let currLineSpace = 0;
@@ -41,10 +40,7 @@ const lineXSpaceAnalysis = (
     }
     const tmpMN = currMeasureNum + 1;
     const tmpLS = currLineSpace + note.measureStart.totalSpace;
-    if(
-      tmpMN <= maxMeasureNumInLine && 
-      tmpLS <= lineSpaceLimit
-    ) {
+    if(tmpLS <= lineSpaceLimit) {
       currMeasureNum = tmpMN;
       currLineSpace = tmpLS;
     } else {
@@ -66,12 +62,40 @@ const lineXSpaceAnalysis = (
 const lineYSpaceAnalysis = (
   notes,
   lineIndex,
-  minLineHeight
+  baseLineHeightSpace
 ) => {
+  let lastNi = lineIndex[0];
+  for(let i = 1; i < lineIndex.length; i++) {
+    const ni = lineIndex[i]
+    const lineStart = notes[lastNi].lineStart
+    let maxHS = 0;
+    for(let j = lastNi; j < ni; j ++) {
+      let currHS = 0;
+      const note = notes[j]
+      if(note.octave > 2) {
+        currHS += ((note.octave - 2) / 2)
+      }
+      if(note.slur || note.tie) {
+        currHS += 2
+      }
+      if(note.tempoPerMeasure) {
+        currHS += 4
+      }
+      maxHS = Math.max(maxHS, currHS)
+    }
+    lineStart.heightSpace = baseLineHeightSpace + maxHS
+    lastNi = ni;
+  }
+  // for(const ni of lineIndex) {
+  //   const note = notes[ni]
+  //   if(note.epsilon) continue
+  //   note.lineStart.heightSpace = baseLineHeightSpace
+  // }
   for(const ni of lineIndex) {
     const note = notes[ni]
-    if(!note.epsilon) {
-      note.lineStart.heightSpace = minLineHeight
+    if(note.epsilon) continue
+    if(note.lineStart.heightSpace === undefined) {
+      console.warn("bug....")
     }
   }
   return notes;
@@ -79,11 +103,10 @@ const lineYSpaceAnalysis = (
 const lineSpaceAnalysis = (
   notes, measureIndex,
   lineSpaceLimit,
-  maxMeasureNumInLine,
-  minLineHeight
+  baseLineHeightSpace
 ) => {
-  const [_0, lineIndex] = lineXSpaceAnalysis(notes, measureIndex, lineSpaceLimit, maxMeasureNumInLine);
-  const _1 = lineYSpaceAnalysis(_0, lineIndex, minLineHeight);
+  const [_0, lineIndex] = lineXSpaceAnalysis(notes, measureIndex, lineSpaceLimit);
+  const _1 = lineYSpaceAnalysis(_0, lineIndex, baseLineHeightSpace);
   return [_1, lineIndex]
 }
 export default lineSpaceAnalysis

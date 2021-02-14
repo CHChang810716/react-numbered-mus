@@ -29,18 +29,18 @@ const Appoggiatura = ({note, sizeRatio}) => {
   const ubX1 = midX + underBarLen;
   const ubY0 = midY + (sizeRatio * UNDER_BAR_Y_SEED);
   return [
-    <text fontSize={fontSize} 
+    <text key={0} fontSize={fontSize} 
       x={midX} y={midY} 
       textAnchor="middle"
     >
       {txt}
     </text>,
-    <QCurve 
+    <QCurve key={1}
       p0={[midX, ubY0]}
       p1={[nx, ny]}
       qp={[midX, ny]}
     />,
-    <line x1={ubX0} y1={ubY0} x2={ubX1} y2={ubY0} style={underBarStyle}/>
+    <line key={2} x1={ubX0} y1={ubY0} x2={ubX1} y2={ubY0} style={underBarStyle}/>
   ]
 }
 

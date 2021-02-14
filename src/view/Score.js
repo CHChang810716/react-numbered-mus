@@ -5,9 +5,9 @@ import underBarAnalysis from '../bits/under-bar-analysis'
 import pageSpaceAnalysis from '../bits/page-space-analysis'
 import Page from './Page'
 import { pagePositionAnalysis } from '../bits/position-analysis'
-import { slurPositionAnalysis } from '../bits/slur-position-analysis'
+import { curveIndex } from '../bits/note-utils'
 
-const NOTE_SIZE_RATE_SEED = 0.005263
+const BASE_LINE_HEIGHT_SEED = 20
 
 /**
  * score = {
@@ -57,25 +57,19 @@ const NOTE_SIZE_RATE_SEED = 0.005263
 
 const notesSpaceAnalysis = (
   notes, {
-    maxMeasureNumInLine, 
-    minLineHeight,
-    pageCntWidth,
     pageCntHeight,
-    yRate, // space * rate = real length
-    xRate
+    maxLineWeight,
+    size
   }
 ) => {
-  for(let i in notes) {
+  for(let i = 0; i < notes.length; i ++) {
     notes[i].id = i;
   }
-  const maxLineXSpace = pageCntWidth / xRate
-  const minLineYSpace = minLineHeight / yRate
+  const pageCntHeightSpace = pageCntHeight / size
   const [notes0, measureIndex] = measureSpaceAnalysis(notes);
   const [notes1, lineIndex] = lineSpaceAnalysis(
-    notes0, measureIndex, maxLineXSpace, 
-    maxMeasureNumInLine, minLineYSpace
+    notes0, measureIndex, maxLineWeight, BASE_LINE_HEIGHT_SEED
   );
-  const pageCntHeightSpace = pageCntHeight / yRate
   const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace)
 
   // annotation analysis
@@ -84,12 +78,10 @@ const notesSpaceAnalysis = (
 }
 const Score = ({
   score,
-  maxMeasureNumInLine, 
-  minLineHeight,
   pageCntWidth,
   pageCntHeight,
-  yRate, // space * rate = real length
-  xRate
+  maxLineWeight, 
+  size,
 }) => {
   const sNotes = score.notes;
   if(!sNotes[sNotes.length - 1].epsilon) {
@@ -104,25 +96,20 @@ const Score = ({
     lineIndex, pageIndex
   ] = notesSpaceAnalysis(
     score.notes,{
-      maxMeasureNumInLine, 
-      minLineHeight,
       pageCntWidth,
       pageCntHeight,
-      yRate, // space * rate = real length
-      xRate
+      maxLineWeight, 
+      size,
     }
   )
-
-  const sizeRatio = pageCntWidth * NOTE_SIZE_RATE_SEED
   return <div>{
-    pageIndex.map((pi, k) => <Page 
-      key={k}
+    pageIndex.map((pi, k) => <div key={k}><Page 
       notes={notes}
       startNoteI={pi}
       cntWidth={pageCntWidth}
       cntHeight={pageCntHeight}
-      sizeRatio={sizeRatio}
-    />)
+      sizeRatio={size}
+    /></div>)
   }</div>
 }
 export default Score

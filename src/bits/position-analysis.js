@@ -132,7 +132,7 @@ const pagePositionAnalysis = (
     const height = cntHeight * (
       note.lineStart.heightSpace / totalYSpace
     )
-    const yOffset = (height - innerHeight) / 2;
+    const yOffset = (height - innerHeight);
     note.linePos = linePositionAnalysis(
       noteI, notes,
       cntWidth - 2 * xPadding, innerHeight,
