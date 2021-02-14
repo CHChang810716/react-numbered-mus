@@ -1,5 +1,5 @@
 import {rectUnion} from './utils'
-const KEY_ASCENT_SIGN = ['\u266D', '\u266F', '']
+const KEY_ASCENT_SIGN = ['\u266D', '\u266F', '\u266E'] // b, #, recover
 const FONT_SIZE_SEED                =  5     ;
 const FONT_HEIGHT_SEED              = FONT_SIZE_SEED * 0.713 ;
 const FONT_WIDTH_SEED               = FONT_SIZE_SEED * 0.54  ;
@@ -11,8 +11,8 @@ const FIRST_DOWN_OCTAVE_DOT_Y_SEED  =  1.0   ;
 const ASCENT_SIZE_SEED              =  3.2   ;
 const ASCENT_HEIGHT_SEED            = ASCENT_SIZE_SEED * 0.713;
 const ASCENT_WIDTH_SEED             = ASCENT_SIZE_SEED * 0.54;
-const ASCENT_X_SEED                 = -0.9  ;
-const ASCENT_Y_SEED                 = -1.8  ;
+const ASCENT_X_SEED                 = -1.25 ;
+const ASCENT_Y_SEED                 = -2.1  ;
 const EXT_DASH_SEED                 =  2.9  ;
 const EXT_DASH_Y_SEED               =  -(FONT_HEIGHT_SEED / 2)  ;
 const EXT_DASH_SP_SEED              =  3.7  ;
@@ -32,6 +32,9 @@ const extAnalysis = (noteType) => {
 const underBarLayout = (
   kr0, kr1, level, ntSizeRatio
 ) => {
+  console.log(kr0)
+  console.log(kr1)
+  console.log(level)
   const space = ntSizeRatio * 1;
   const x0 = kr0.x;
   const x1 = kr1.x + kr1.width;

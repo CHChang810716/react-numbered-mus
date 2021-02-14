@@ -23,13 +23,23 @@ const underBarAnalysis = (notes) => {
         note.underBar.flag[i] = 1;
       }
     }
-    if(underBarNum < lastUnderBarNum) {
+    else if(underBarNum < lastUnderBarNum) {
       for(let i = underBarNum; i < lastUnderBarNum; i ++) {
         if(lastNote.underBar.flag[i] === undefined) {
           lastNote.underBar.flag[i] = 0;
         }
         lastNote.underBar.flag[i] |= 2;
-        // note.underBar.flag[i] = 1;
+      }
+    }
+    if(note.measureStart) {
+      for(let i = 0; i < lastUnderBarNum; i ++) {
+        if(lastNote.underBar.flag[i] === undefined) {
+          lastNote.underBar.flag[i] = 0;
+        }
+        lastNote.underBar.flag[i] |= 2;
+      }
+      for(let i = 0; i < underBarNum; i ++) {
+        note.underBar.flag[i] = 1;
       }
     }
     lastUnderBarNum = underBarNum;
