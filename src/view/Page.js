@@ -11,6 +11,7 @@ import Tie from './Tie'
 import Triplet from './Triplet'
 import Clef from './Clef'
 import TimeSig from './TimeSig'
+import Speed from './Speed'
 
 const Page = ({
   notes, 
@@ -72,6 +73,10 @@ const Page = ({
     sizeRatio={sizeRatio} 
   />)
   noteViews = noteViews.concat(<TimeSig key={k++}
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Speed   key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)

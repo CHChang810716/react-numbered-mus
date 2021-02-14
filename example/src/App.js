@@ -18,7 +18,8 @@ const score = {
       slur: [0, 2],
       baseTune: 'D',
       tempoPerMeasure: 4,
-      noteTypePerTempo: 4
+      noteTypePerTempo: 4,
+      speed: 80
     }),
     normalNote(1, 8, -2),
     normalNote(1, 8, -2),

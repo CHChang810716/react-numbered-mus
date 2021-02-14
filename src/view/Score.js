@@ -27,6 +27,7 @@ const BASE_LINE_HEIGHT_SEED = 20
  *      tempoPerMeasure: 4,
  *      noteTypePerTempo: 4,
  *      baseTune: D,
+ *      speed: 80,
  *      slur: {
  *        flag: <true/false>,
  *        id: <string>

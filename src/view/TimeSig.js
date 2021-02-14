@@ -1,7 +1,7 @@
 import React from 'react'
 import {MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED, underBarStyle} from '../bits/note-utils'
 const TIME_SIG_FONT_SIZE_SEED = 4.5;
-const TIME_SIG_WIDTH_SEED = TIME_SIG_FONT_SIZE_SEED * 1.8;
+const TIME_SIG_WIDTH_SEED = TIME_SIG_FONT_SIZE_SEED * 2;
 const TimeSig = ({notes, startNoteI, endNoteI, sizeRatio}) => {
   const res = []
   let k = 0;
