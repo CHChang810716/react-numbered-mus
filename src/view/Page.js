@@ -9,7 +9,8 @@ import Appoggiatura from './Appoggiatura'
 import Slur from './Slur'
 import Tie from './Tie'
 import Triplet from './Triplet'
-
+import Clef from './Clef'
+import TimeSig from './TimeSig'
 
 const Page = ({
   notes, 
@@ -63,6 +64,14 @@ const Page = ({
     sizeRatio={sizeRatio} 
   />)
   noteViews = noteViews.concat(<Triplet key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Clef    key={k++}
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<TimeSig key={k++}
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)

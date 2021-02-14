@@ -101,6 +101,9 @@ const linePositionAnalysis = (
       currX, y,
       ntSizeRatio
     )
+    note.measureNot = {
+      x: 0
+    }
     currX += width;
   }
   return [x, y, cntWidth, cntHeight]

@@ -78,8 +78,8 @@ const lineYSpaceAnalysis = (
       if(note.slur || note.tie) {
         currHS += 2
       }
-      if(note.tempoPerMeasure) {
-        currHS += 4
+      if(note.tempoPerMeasure || note.baseTune) {
+        currHS += 5
       }
       maxHS = Math.max(maxHS, currHS)
     }

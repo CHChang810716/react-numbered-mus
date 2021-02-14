@@ -15,7 +15,10 @@ const normalNote = (keyTxt, nt, octave, optional) => {
 const score = {
   notes: [
     measureStart(1, 2, 0, {
-      slur: [0, 2]
+      slur: [0, 2],
+      baseTune: 'D',
+      tempoPerMeasure: 4,
+      noteTypePerTempo: 4
     }),
     normalNote(1, 8, -2),
     normalNote(1, 8, -2),
