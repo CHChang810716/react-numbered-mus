@@ -1,11 +1,11 @@
 import {rectUnion} from './utils'
 const KEY_ASCENT_SIGN = ['\u266D', '\u266F', '\u266E'] // b, #, recover
-const FONT_SIZE_SEED                =  5     ;
+const FONT_SIZE_SEED                = 3.5     ;
 const FONT_HEIGHT_SEED              = FONT_SIZE_SEED * 0.713 ;
 const FONT_WIDTH_SEED               = FONT_SIZE_SEED * 0.54  ;
 const OCTAVE_DOT_SP_SEED            =  1.0   ; // THE SPACE BETween dot
 const OCTAVE_DOT_R_SEED             = FONT_SIZE_SEED * 0.07  ;
-const OCTAVE_DOT_X_SEED             =  1.4   ;
+const OCTAVE_DOT_X_SEED             = FONT_SIZE_SEED * 0.28  ;
 const FIRST_UP_OCTAVE_DOT_Y_SEED    = -4.7   ;
 const FIRST_DOWN_OCTAVE_DOT_Y_SEED  =  1.0   ;
 const ASCENT_SIZE_SEED              =  3.2   ;
@@ -13,13 +13,13 @@ const ASCENT_HEIGHT_SEED            = ASCENT_SIZE_SEED * 0.713;
 const ASCENT_WIDTH_SEED             = ASCENT_SIZE_SEED * 0.54;
 const ASCENT_X_SEED                 = -1.25 ;
 const ASCENT_Y_SEED                 = -2.1  ;
-const EXT_DASH_SEED                 =  2.9  ;
+const EXT_DASH_SEED                 =  3.5  ;
 const EXT_DASH_Y_SEED               =  -(FONT_HEIGHT_SEED / 2)  ;
-const EXT_DASH_SP_SEED              =  3.7  ;
-const HALF_POINT_R_SEED             = FONT_SIZE_SEED * 0.1  
+const EXT_DASH_SP_SEED              =  1  ;
+const HALF_POINT_R_SEED             = FONT_SIZE_SEED * 0.06  
 
 const MEASURE_NOTATION_X_SEED       = -3;
-const MEASURE_NOTATION_Y_SEED       = -8.7;
+const MEASURE_NOTATION_Y_SEED       = -6.7;
 
 const extAnalysis = (noteType) => {
   switch(noteType) {
@@ -32,9 +32,6 @@ const extAnalysis = (noteType) => {
 const underBarLayout = (
   kr0, kr1, level, ntSizeRatio
 ) => {
-  console.log(kr0)
-  console.log(kr1)
-  console.log(level)
   const space = ntSizeRatio * 1;
   const x0 = kr0.x;
   const x1 = kr1.x + kr1.width;

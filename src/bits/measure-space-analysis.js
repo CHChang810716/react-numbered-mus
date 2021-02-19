@@ -12,7 +12,7 @@ const noteWeight = (note) => {
   }
   const _x = 1/note.noteType
   const x = note.halfPoint ? _x * Math.pow(1.5, note.halfPoint) : _x;
-  return weightTrans(x, 0.85);
+  return weightTrans(x, 0.825);
 }
 /**
  * measure begin note = {

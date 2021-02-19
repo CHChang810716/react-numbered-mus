@@ -125,6 +125,7 @@ const pagePositionAnalysis = (
     totalYSpace += notes[noteI].lineStart.heightSpace;
   }
   const innerHeight = sizeRatio * LINE_HEIGHT_SEED;
+  const maxHeight = innerHeight * 2.5;
   const xPadding = sizeRatio * LINE_X_PADDING_SEED;
   let currHeight = 0;
   for(let noteI = startNoteI; 
@@ -132,9 +133,9 @@ const pagePositionAnalysis = (
     noteI = notes[noteI].lineStart.next
   ) {
     const note = notes[noteI]
-    const height = cntHeight * (
+    const height = Math.min(cntHeight * (
       note.lineStart.heightSpace / totalYSpace
-    )
+    ), maxHeight)
     const yOffset = (height - innerHeight);
     note.linePos = linePositionAnalysis(
       noteI, notes,

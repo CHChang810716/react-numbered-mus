@@ -24,7 +24,7 @@ function* curvePositionAnalysis(notes, startNoteI, endNoteI, sizeRatio, ntProp) 
   for(const curveID in index) {
     const {startNote, endNote, startLine, endLine} = index[curveID]
     if(startLine !== endLine) {
-      if(startNote.id >= startNoteI) {
+      if(startNote.id >= startNoteI && startNote.id < endNoteI) {
         const start = startNote.pos
         const x0 = start.keyRect.x + (start.keyRect.width / 2)
         const [lx, ly, lw, lh] = startLine.linePos;
@@ -35,7 +35,7 @@ function* curvePositionAnalysis(notes, startNoteI, endNoteI, sizeRatio, ntProp) 
           x1={x} y1={y} sizeRatio={sizeRatio}
         />
       }
-      if(endNote.id < endNoteI) {
+      if(endNote.id >= startNoteI && endNote.id < endNoteI) {
         const end = endNote.pos
         const x1 = end.keyRect.x + (end.keyRect.width / 2)
         const [lx, ly, lw, lh] = endLine.linePos;
@@ -48,16 +48,16 @@ function* curvePositionAnalysis(notes, startNoteI, endNoteI, sizeRatio, ntProp) 
       }
       continue;
     } else {
-      const start = startNote.pos
-      const end = endNote.pos
-      const startBR = rectUnion([start.keyRect, start.ascentRect, start.octaveDotsRect])
-      const x0 = start.keyRect.x + (start.keyRect.width / 2)
-      const x1 = end.keyRect.x + (end.keyRect.width / 2)
-      const endBR = rectUnion([end.keyRect, end.ascentRect, end.octaveDotsRect])
-      const y = Math.min(startBR.y, endBR.y) - topShift
-      const y0 = y
-      const y1 = y
       if(startNote.id >= startNoteI && endNote.id < endNoteI) {
+        const start = startNote.pos
+        const end = endNote.pos
+        const startBR = rectUnion([start.keyRect, start.ascentRect, start.octaveDotsRect])
+        const x0 = start.keyRect.x + (start.keyRect.width / 2)
+        const x1 = end.keyRect.x + (end.keyRect.width / 2)
+        const endBR = rectUnion([end.keyRect, end.ascentRect, end.octaveDotsRect])
+        const y = Math.min(startBR.y, endBR.y) - topShift
+        const y0 = y
+        const y1 = y
         yield <PlotCurve key={k++} 
           x0={x0} y0={y0} 
           x1={x1} y1={y1} sizeRatio={sizeRatio} 

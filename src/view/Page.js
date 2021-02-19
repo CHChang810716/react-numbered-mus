@@ -33,6 +33,7 @@ const Page = ({
     }
     if(note.underBarsPos) {
       for(const ub of note.underBarsPos) {
+        if(ub===undefined) continue
         const [x1, x2, y ] = ub 
         noteViews.push(<line key={k++} x1={x1} y1={y} x2={x2} y2={y} style={underBarStyle}/>)
 
