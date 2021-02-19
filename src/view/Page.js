@@ -81,7 +81,7 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  return <svg width={cntWidth} height={cntHeight}>
+  return <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={cntWidth} height={cntHeight}>
     <g>
       {noteViews}
     </g>

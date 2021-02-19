@@ -1,6 +1,11 @@
 import React from 'react'
-import {MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED, underBarStyle} from '../bits/note-utils'
-const CLEF_FONT_SIZE_SEED = 4.5;
+import {
+  MEASURE_NOTATION_X_SEED, 
+  MEASURE_NOTATION_Y_SEED, 
+  MEASURE_NOTATION_FSIZE_SEED,
+  underBarStyle
+} from '../bits/note-utils'
+const CLEF_FONT_SIZE_SEED = MEASURE_NOTATION_FSIZE_SEED;
 const CLEF_WIDTH_SEED = CLEF_FONT_SIZE_SEED * 2.6;
 const Clef = ({notes, startNoteI, endNoteI, sizeRatio}) => {
   const res = []

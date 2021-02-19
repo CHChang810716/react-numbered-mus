@@ -19,7 +19,10 @@ const EXT_DASH_SP_SEED              =  1  ;
 const HALF_POINT_R_SEED             = FONT_SIZE_SEED * 0.06  
 
 const MEASURE_NOTATION_X_SEED       = -3;
-const MEASURE_NOTATION_Y_SEED       = -6.7;
+const MEASURE_NOTATION_Y_SEED       = -6.3;
+const MEASURE_NOTATION_FSIZE_SEED   = 3.7;
+
+const NOTE_TOP_L2_Y_SEED            = -4;
 
 const extAnalysis = (noteType) => {
   switch(noteType) {
@@ -203,6 +206,7 @@ const curveIndex = (notes, ntProp) => {
 
 export {noteLayout, ascentSign, underBarStyle, 
   underBarLayout, curveIndex, 
-  MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED
+  MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED,
+  MEASURE_NOTATION_FSIZE_SEED
 }
 
