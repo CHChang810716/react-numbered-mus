@@ -12,6 +12,7 @@ import Triplet from './Triplet'
 import Clef from './Clef'
 import TimeSig from './TimeSig'
 import Speed from './Speed'
+import TL2Label from './TL2Label'
 
 const Page = ({
   notes, 
@@ -81,6 +82,12 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
+  for(const label of ['pizz', 'solo', 'arco', 'tutti']) {
+    noteViews = noteViews.concat(<TL2Label   key={k++} 
+      notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+      sizeRatio={sizeRatio} ntProp={label}
+    />)
+  }
   return <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={cntWidth} height={cntHeight}>
     <g>
       {noteViews}
