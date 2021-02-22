@@ -8,6 +8,7 @@ import { pagePositionAnalysis } from '../bits/position-analysis'
 import { curveIndex } from '../bits/note-utils'
 
 const BASE_LINE_HEIGHT_SEED = 20
+const LINE_X_PADDING_SEED = 5;
 
 /**
  * score = {
@@ -66,7 +67,7 @@ const notesSpaceAnalysis = (
   for(let i = 0; i < notes.length; i ++) {
     notes[i].id = i;
   }
-  const pageCntHeightSpace = pageCntHeight / size
+  const pageCntHeightSpace = pageCntHeight/ size
   const [notes0, measureIndex] = measureSpaceAnalysis(notes);
   const [notes1, lineIndex] = lineSpaceAnalysis(
     notes0, measureIndex, maxLineWeight, BASE_LINE_HEIGHT_SEED
@@ -103,14 +104,22 @@ const Score = ({
       size,
     }
   )
+  const xPadding = size * LINE_X_PADDING_SEED;
+  const yTopMargin = 20;
   return <div>{
-    pageIndex.map((pi, k) => <div key={k}><Page 
-      notes={notes}
-      startNoteI={pi}
-      cntWidth={pageCntWidth}
-      cntHeight={pageCntHeight}
-      sizeRatio={size}
-    /></div>)
+    pageIndex.map((pi, k) => <div key={k}>
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={pageCntWidth} height={pageCntHeight}>
+        <Page 
+          notes={notes}
+          startNoteI={pi}
+          x={xPadding}
+          y={yTopMargin}
+          cntWidth={pageCntWidth - (2 * xPadding)}
+          cntHeight={pageCntHeight - (2 * yTopMargin)}
+          sizeRatio={size}
+        />
+      </svg>
+    </div>)
   }</div>
 }
 export default Score

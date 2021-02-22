@@ -22,7 +22,7 @@ const MEASURE_NOTATION_X_SEED       = -3;
 const MEASURE_NOTATION_Y_SEED       = -6.3;
 const MEASURE_NOTATION_FSIZE_SEED   = 3.7;
 
-const NOTE_TOP_L2_Y_SEED            = -8;
+const NOTE_TOP_L2_Y_SEED            = -7;
 const NOTE_TOP_L2_X_SEED            = -3;
 
 const extAnalysis = (noteType) => {
@@ -98,9 +98,13 @@ const noteLayout = (
   const rects = [keyRect, ascentRect]
   const octaveDotsRect = {
     x: octaveDotX - octaveDotR,
-    y: Math.min(...octaveDotYs) - octaveDotR,
+    y: octaveDotYs.length > 0 ? 
+      (Math.min(...octaveDotYs) - octaveDotR) :
+      firstUpOctaveDotY,
     width: octaveDotR * 2,
-    height: octaveDotSp * (octaveDotYs.length - 1) + (octaveDotR * 2)
+    height: octaveDotYs.length > 0 ? 
+      octaveDotSp * (octaveDotYs.length - 1) + (octaveDotR * 2) :
+      0
   }
   if(octaveDotYs.length > 0) {
     rects.push(octaveDotsRect)
@@ -204,9 +208,32 @@ const curveIndex = (notes, ntProp) => {
   }
   return index
 }
+const crescDimIndex = (notes, ntProp) => {
+  let currLineNote = null;
+  let index = {}
+  let tmp = null
+  for(let i = 0; i < notes.length; i ++) {
+    const note = notes[i]
+    if(note.lineStart) currLineNote = note;
+    const target = note[ntProp]
+    if(target === undefined) continue
+    if(target.start) {
+      tmp = {
+        startNote: note,
+        startLine: currLineNote
+      }
+    }
+    if(target.end) {
+      tmp.endNote = note
+      tmp.endLine = currLineNote
+      index[note.id] = tmp
+    }
+  }
+  return index
+}
 
 export {noteLayout, ascentSign, underBarStyle, 
-  underBarLayout, curveIndex, 
+  underBarLayout, curveIndex, crescDimIndex,
   MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED,
   MEASURE_NOTATION_FSIZE_SEED,
   NOTE_TOP_L2_X_SEED, NOTE_TOP_L2_Y_SEED

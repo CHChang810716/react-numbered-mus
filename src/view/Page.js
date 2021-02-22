@@ -13,16 +13,19 @@ import Clef from './Clef'
 import TimeSig from './TimeSig'
 import Speed from './Speed'
 import TL2Label from './TL2Label'
+import Cresc from './Cresc'
+import Dim from './Dim'
 
 const Page = ({
   notes, 
   startNoteI, 
+  x, y,
   cntWidth,
   cntHeight,
   sizeRatio
 }) => {
   if(notes[startNoteI].epsilon) return null
-  pagePositionAnalysis(notes, startNoteI, cntWidth, cntHeight, sizeRatio)
+  pagePositionAnalysis(notes, startNoteI, x, y, cntWidth, cntHeight, sizeRatio)
   let noteViews = []
   let k = 0;
   const endNoteI = notes[startNoteI].pageStart.next
@@ -88,10 +91,16 @@ const Page = ({
       sizeRatio={sizeRatio} ntProp={label}
     />)
   }
-  return <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={cntWidth} height={cntHeight}>
-    <g>
+  noteViews = noteViews.concat(<Cresc  key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Dim  key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  return     <g>
       {noteViews}
     </g>
-  </svg>
 }
 export default Page
