@@ -16,6 +16,7 @@ import { TL2Label, TL2_LABLE_WIDTH_SEEDS } from './TL2Label'
 import Cresc from './Cresc'
 import Dim from './Dim'
 import { BL2Label, BL2_LABLE_WIDTH_SEEDS } from './BL2Label'
+import { LoopBegin, LoopEnd } from './Loop'
 
 const Page = ({
   notes, 
@@ -48,6 +49,12 @@ const Page = ({
       const [x, y, w, h] = note.measurePos
       noteViews.push(<line key={k++} x1={x+w} y1={y} x2={x+w} y2={y+h} style={underBarStyle}/>)
       noteViews.push(<MeasureID key={k++} note={note} sizeRatio={sizeRatio} />)
+      if(note.loopBegin) {
+        noteViews.push(<LoopBegin x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
+      }
+      if(note.loopEnd) {
+        noteViews.push(<LoopEnd x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
+      }
     }
     if(note.lineStart) {
       const [x, y, w, h] = note.measurePos
