@@ -62,6 +62,9 @@ const measurePositionAnalysis = (
     note.tl2Pos = {
       x: 0
     }
+    note.bl2Pos = {
+      x: 0
+    }
     currX += width;
   }
   return [x, y, cntWidth, cntHeight]

@@ -12,9 +12,10 @@ import Triplet from './Triplet'
 import Clef from './Clef'
 import TimeSig from './TimeSig'
 import Speed from './Speed'
-import TL2Label from './TL2Label'
+import { TL2Label, TL2_LABLE_WIDTH_SEEDS } from './TL2Label'
 import Cresc from './Cresc'
 import Dim from './Dim'
+import { BL2Label, BL2_LABLE_WIDTH_SEEDS } from './BL2Label'
 
 const Page = ({
   notes, 
@@ -85,12 +86,19 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  for(const label of ['pizz', 'solo', 'arco', 'tutti']) {
+  for(const label in TL2_LABLE_WIDTH_SEEDS) {
     noteViews = noteViews.concat(<TL2Label   key={k++} 
       notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
       sizeRatio={sizeRatio} ntProp={label}
     />)
   }
+  for(const label in BL2_LABLE_WIDTH_SEEDS) {
+    noteViews = noteViews.concat(<BL2Label   key={k++} 
+      notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+      sizeRatio={sizeRatio} ntProp={label}
+    />)
+  }
+  
   noteViews = noteViews.concat(<Cresc  key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 

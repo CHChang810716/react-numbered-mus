@@ -22,5 +22,10 @@ const svgDbg = {
 const QCurve = ({p0, p1, qp}) => {
   return <path d={`M${p0[0]} ${p0[1]} Q ${qp[0]} ${qp[1]} ${p1[0]} ${p1[1]}`} stroke="black" fill="transparent" />
 }
+const gnrlFontStyle = {
+  fontFamily: 'serif',
+  fontStyle: 'italic',
+  fontWeight: 'bold'
+}
 
-export {rectUnion, svgDbg, QCurve}
+export {rectUnion, svgDbg, QCurve, gnrlFontStyle}

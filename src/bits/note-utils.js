@@ -24,6 +24,8 @@ const MEASURE_NOTATION_FSIZE_SEED   = 3.7;
 
 const NOTE_TOP_L2_Y_SEED            = -7;
 const NOTE_TOP_L2_X_SEED            = -3;
+const NOTE_BTN_L2_Y_SEED            =  6.5;
+const NOTE_BTN_L2_X_SEED            = -2;
 
 const extAnalysis = (noteType) => {
   switch(noteType) {
@@ -236,6 +238,7 @@ export {noteLayout, ascentSign, underBarStyle,
   underBarLayout, curveIndex, crescDimIndex,
   MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED,
   MEASURE_NOTATION_FSIZE_SEED,
-  NOTE_TOP_L2_X_SEED, NOTE_TOP_L2_Y_SEED
+  NOTE_TOP_L2_X_SEED, NOTE_TOP_L2_Y_SEED,
+  NOTE_BTN_L2_X_SEED, NOTE_BTN_L2_Y_SEED,
 }
 

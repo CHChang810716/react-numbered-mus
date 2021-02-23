@@ -3,7 +3,7 @@ import { rectUnion } from './utils';
 import { crescDimIndex, underBarStyle } from './note-utils'
 const CRESC_DIM_H_SEED = 1.8;
 const OVERFLOW_SEED = 30;
-const BTN_SHIFT_SEED = 6;
+const BTN_SHIFT_SEED = 7.3;
 const X_PADDING = 1;
 const dirSym = {
   cresc: '<',
