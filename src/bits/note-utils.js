@@ -6,7 +6,7 @@ const FONT_WIDTH_SEED               = FONT_SIZE_SEED * 0.54  ;
 const OCTAVE_DOT_SP_SEED            =  1.0   ; // THE SPACE BETween dot
 const OCTAVE_DOT_R_SEED             = FONT_SIZE_SEED * 0.07  ;
 const OCTAVE_DOT_X_SEED             = FONT_SIZE_SEED * 0.28  ;
-const FIRST_UP_OCTAVE_DOT_Y_SEED    = -4.7   ;
+const FIRST_UP_OCTAVE_DOT_Y_SEED    = -3.6   ;
 const FIRST_DOWN_OCTAVE_DOT_Y_SEED  =  1.0   ;
 const ASCENT_SIZE_SEED              =  3.2   ;
 const ASCENT_HEIGHT_SEED            = ASCENT_SIZE_SEED * 0.713;
@@ -26,6 +26,7 @@ const NOTE_TOP_L2_Y_SEED            = -7;
 const NOTE_TOP_L2_X_SEED            = -3;
 const NOTE_BTN_L2_Y_SEED            =  6.5;
 const NOTE_BTN_L2_X_SEED            = -2;
+const STACC_Y_SEED                  = -4.7;
 
 const extAnalysis = (noteType) => {
   switch(noteType) {
@@ -102,7 +103,7 @@ const noteLayout = (
     x: octaveDotX - octaveDotR,
     y: octaveDotYs.length > 0 ? 
       (Math.min(...octaveDotYs) - octaveDotR) :
-      firstUpOctaveDotY,
+      firstDownOctaveDotY,
     width: octaveDotR * 2,
     height: octaveDotYs.length > 0 ? 
       octaveDotSp * (octaveDotYs.length - 1) + (octaveDotR * 2) :
@@ -240,5 +241,6 @@ export {noteLayout, ascentSign, underBarStyle,
   MEASURE_NOTATION_FSIZE_SEED,
   NOTE_TOP_L2_X_SEED, NOTE_TOP_L2_Y_SEED,
   NOTE_BTN_L2_X_SEED, NOTE_BTN_L2_Y_SEED,
+  STACC_Y_SEED
 }
 
