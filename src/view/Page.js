@@ -18,6 +18,7 @@ import Dim from './Dim'
 import { BL2Label, BL2_LABLE_WIDTH_SEEDS } from './BL2Label'
 import { LoopBegin, LoopEnd } from './Loop'
 import { Stacc } from './Stacc'
+import { Marcato } from './Marcato'
 
 const Page = ({
   notes, 
@@ -116,6 +117,10 @@ const Page = ({
     sizeRatio={sizeRatio} 
   />)
   noteViews = noteViews.concat(<Stacc  key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Marcato  key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)

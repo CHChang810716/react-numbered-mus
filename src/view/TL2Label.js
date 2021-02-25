@@ -11,7 +11,12 @@ const TL2_LABLE_WIDTH_SEEDS = {
   pizz: 8,
   solo: 8,
   arco: 8,
-  tutti: 10
+  tutti: 10,
+  rit: 8,
+  rubato: 12
+}
+const TXT = {
+  rit: 'rit.'
 }
 
 const TL2Label = ({notes, startNoteI, endNoteI, sizeRatio, ntProp}) => {
@@ -27,7 +32,7 @@ const TL2Label = ({notes, startNoteI, endNoteI, sizeRatio, ntProp}) => {
     const x = nx + (NOTE_TOP_L2_X_SEED * sizeRatio) + note.tl2Pos.x
     const y = ny + (NOTE_TOP_L2_Y_SEED * sizeRatio)
     const fontSize = TL2_LABLE_FONT_SIZE_SEED * sizeRatio
-    const txt = note[ntProp].txt ? note[ntProp].txt : ntProp
+    const txt = TXT[ntProp] ? TXT[ntProp] : ntProp
     res.push(<text key={k++} x={x} y={y} fontSize={fontSize} style={gnrlFontStyle}>
       {txt}
     </text>)
