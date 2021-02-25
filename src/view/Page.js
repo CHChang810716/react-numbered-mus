@@ -19,6 +19,8 @@ import { BL2Label, BL2_LABLE_WIDTH_SEEDS } from './BL2Label'
 import { LoopBegin, LoopEnd } from './Loop'
 import { Stacc } from './Stacc'
 import { Marcato } from './Marcato'
+import { zip } from 'zip-array'
+import { Tremolo } from './Tremolo'
 
 const Page = ({
   notes, 
@@ -121,6 +123,10 @@ const Page = ({
     sizeRatio={sizeRatio} 
   />)
   noteViews = noteViews.concat(<Marcato  key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Tremolo  key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)

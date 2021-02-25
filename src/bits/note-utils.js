@@ -13,9 +13,9 @@ const ASCENT_HEIGHT_SEED            = ASCENT_SIZE_SEED * 0.713;
 const ASCENT_WIDTH_SEED             = ASCENT_SIZE_SEED * 0.54;
 const ASCENT_X_SEED                 = -1.25 ;
 const ASCENT_Y_SEED                 = -2.1  ;
-const EXT_DASH_SEED                 =  3.5  ;
+const EXT_DASH_SEED                 =  3  ;
 const EXT_DASH_Y_SEED               =  -(FONT_HEIGHT_SEED / 2)  ;
-const EXT_DASH_SP_SEED              =  1  ;
+const EXT_DASH_SP_SEED              =  2.3  ;
 const HALF_POINT_R_SEED             = FONT_SIZE_SEED * 0.06  
 
 const MEASURE_NOTATION_X_SEED       = -3;

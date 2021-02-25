@@ -51,6 +51,7 @@
     "dist"
   ],
   "dependencies": {
-    "mathjs": "^9.1.0"
+    "mathjs": "^9.1.0",
+    "zip-array": "^1.0.1"
   }
 }
