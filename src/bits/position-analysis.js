@@ -1,7 +1,6 @@
 import {noteLayout, underBarLayout} from './note-utils'
 
 const LINE_HEIGHT_SEED = 13;
-const MEASURE_X_PADDING_SEED = 2.3;
 /**
  * note.pos = <defined in note-utils>
  */
@@ -17,11 +16,14 @@ const measurePositionAnalysis = (
   cntHeight,
   x,
   y,
-  ntSizeRatio
+  ntSizeRatio,
+  opt = {
+    MEASURE_X_PADDING_SEED: 2.3
+  }
 ) => {
   const startNote = notes[startNoteI]
   const endNoteI = startNote.measureStart.next
-  const xPadding = ntSizeRatio * MEASURE_X_PADDING_SEED;
+  const xPadding = ntSizeRatio * opt.MEASURE_X_PADDING_SEED;
   const innerWidth = cntWidth - (2 * xPadding);
   let currX = x + xPadding;
   let ubStart = []
@@ -76,7 +78,10 @@ const linePositionAnalysis = (
   cntHeight,
   x,
   y,
-  ntSizeRatio
+  ntSizeRatio,
+  opt = {
+    MEASURE_X_PADDING_SEED: 2.3
+  }
 ) => {
   const startNote = notes[startNoteI]
   if(startNote.epsilon) return null
@@ -104,7 +109,8 @@ const linePositionAnalysis = (
       width,
       cntHeight,
       currX, y,
-      ntSizeRatio
+      ntSizeRatio,
+      opt
     )
     note.measureNot = {
       x: 0
@@ -119,7 +125,10 @@ const pagePositionAnalysis = (
   x, y,
   cntWidth,
   cntHeight,
-  sizeRatio
+  sizeRatio,
+  opt = {
+    MEASURE_X_PADDING_SEED: 2.3
+  }
 ) => {
   if(notes[startNoteI].epsilon) return null
   const endNoteI = notes[startNoteI].pageStart.next;
@@ -147,7 +156,8 @@ const pagePositionAnalysis = (
       noteI, notes,
       cntWidth, innerHeight,
       x, currHeight + yOffset,
-      sizeRatio
+      sizeRatio,
+      opt
     )
     currHeight += height
   }

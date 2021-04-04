@@ -30,19 +30,11 @@ const noteWeight = (note) => {
  * measure index = [<measure start node id>...] the last measure is epsilon
  */
 const measureSpaceAnalysis = (notes) => {
-  let tempoPerMeasure = DEFAULT_TEMPO_PRE_MEASURE;
-  let noteTypePerTempo = DEFAULT_NOTE_TYPE_PRE_TEMPO;
   let notesInMeasure = [];
   let measureId = 1;
   let measureIndex = [];
   for(let noteI = 0; noteI < notes.length; noteI++) {
     const note = notes[noteI];
-    if(note.tempoPerMeasure) {
-      tempoPerMeasure = note.tempoPerMeasure;
-    }
-    if(note.noteTypePerTempo) {
-      noteTypePerTempo = note.noteTypePerTempo;
-    }
     if(note.measureStart !== undefined || note.epsilon) {
       // measure space analysis
       if(notesInMeasure.length > 0) {

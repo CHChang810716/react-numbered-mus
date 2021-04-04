@@ -28,10 +28,13 @@ const Page = ({
   x, y,
   cntWidth,
   cntHeight,
-  sizeRatio
+  sizeRatio,
+  name,
+  renderMeasureBar = true,
+  MEASURE_X_PADDING_SEED = 2.3
 }) => {
   if(notes[startNoteI].epsilon) return null
-  pagePositionAnalysis(notes, startNoteI, x, y, cntWidth, cntHeight, sizeRatio)
+  pagePositionAnalysis(notes, startNoteI, x, y, cntWidth, cntHeight, sizeRatio, {MEASURE_X_PADDING_SEED})
   let noteViews = []
   let k = 0;
   const endNoteI = notes[startNoteI].pageStart.next
@@ -46,10 +49,9 @@ const Page = ({
         if(ub===undefined) continue
         const [x1, x2, y ] = ub 
         noteViews.push(<line key={k++} x1={x1} y1={y} x2={x2} y2={y} style={underBarStyle}/>)
-
       }
     }
-    if(note.measurePos) {
+    if(note.measurePos && renderMeasureBar) {
       const [x, y, w, h] = note.measurePos
       noteViews.push(<line key={k++} x1={x+w} y1={y} x2={x+w} y2={y+h} style={underBarStyle}/>)
       noteViews.push(<MeasureID key={k++} note={note} sizeRatio={sizeRatio} />)
@@ -60,7 +62,7 @@ const Page = ({
         noteViews.push(<LoopEnd x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
       }
     }
-    if(note.lineStart) {
+    if(note.lineStart && renderMeasureBar) {
       const [x, y, w, h] = note.measurePos
       noteViews.push(<line key={k++} x1={x} y1={y} x2={x} y2={y+h} style={underBarStyle}/>)
     }
@@ -130,7 +132,7 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  return     <g>
+  return     <g name={name}>
       {noteViews}
     </g>
 }
