@@ -9,12 +9,12 @@ import pageSpaceAnalysis from '../bits/page-space-analysis'
 const BASE_LINE_HEIGHT_SEED = 20
 
 const FONT_SIZE_SEED = 2.6
-const X_SEED = -0.05;
-const Y_SEED = 0.25;
-const Y_SHIFT_SEED = 1.6;
-const X_SHIFT_SEED = 1;
+const X_SEED = -1.1;
+const Y_SEED = -1.1;
+const Y_SHIFT_SEED = 0.9;
+const X_SHIFT_SEED = 0.9;
 const UNDER_BAR_LENGTH_SEED = FONT_SIZE_SEED * 0.25;
-const UNDER_BAR_Y_SEED = Y_SEED + 0.14;
+const UNDER_BAR_Y_SEED = Y_SEED - 0.14;
 const APG_FONT_SIZE_SEED                = 3.5     ;
 const APG_FONT_HEIGHT_SEED              = APG_FONT_SIZE_SEED * 0.713 ;
 const APG_FONT_WIDTH_SEED               = APG_FONT_SIZE_SEED * 0.54  ;
@@ -49,21 +49,17 @@ const Appoggiatura = ({note, sizeRatio}) => {
     return null;
   }
   const {pos, apg} = note;
-  const {outRect, noteRect} = pos
-  const midX = noteRect.x + (sizeRatio * X_SEED)
-  const midY = noteRect.y + (sizeRatio * Y_SEED)
-  const nx = noteRect.x + (sizeRatio * X_SHIFT_SEED);
+  const {outRect, keyRect} = pos
+  const midX = keyRect.x + (sizeRatio * X_SEED)
+  const midY = keyRect.y + (sizeRatio * Y_SEED)
+  const nx = midX + (sizeRatio * X_SHIFT_SEED)
   const ny = midY + (sizeRatio * Y_SHIFT_SEED)
-  const underBarLen = sizeRatio * UNDER_BAR_LENGTH_SEED * apg.length
-  const ubX0 = midX - underBarLen;
-  const ubX1 = midX + underBarLen;
-  const ubY0 = midY + (sizeRatio * UNDER_BAR_Y_SEED);
   const apgSizeRatio = sizeRatio * 0.5;
   const apgFontW = apgSizeRatio * APG_FONT_WIDTH_SEED;
   const apgW = apg.length * apgFontW;
   const apgH = apgSizeRatio * APG_FONT_HEIGHT_SEED;
-  const apgX = midX - (0.5 * apgW) // - (apgFontW * 0.3);
-  const apgY = midY - apgH; 
+  const apgX = midX - (0.5 * apgW) - (apgFontW * 0.3);
+  const apgY = midY - apgH - (sizeRatio * 1.2); 
   const [
     apgNotes, measureIndex, 
     lineIndex, pageIndex
@@ -87,12 +83,15 @@ const Appoggiatura = ({note, sizeRatio}) => {
       sizeRatio={apgSizeRatio}
       MEASURE_X_PADDING_SEED={0}
       renderMeasureBar={false}
+      name="apg"
     />,
     <QCurve key={1}
-      p0={[midX, ubY0]}
+      p0={[midX, midY]}
       p1={[nx, ny]}
       qp={[midX, ny]}
-    />
+    />,
+    // <circle key={2} fill="black" cx={midX} cy={midY} r={1} />,
+    // <rect key={3} x={apgX} y={apgY} width={apgW} height={apgH} style={underBarStyle} />
   ]
 }
 

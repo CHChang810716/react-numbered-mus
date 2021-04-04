@@ -68,22 +68,27 @@ const lineYSpaceAnalysis = (
   for(let i = 1; i < lineIndex.length; i++) {
     const ni = lineIndex[i]
     const lineStart = notes[lastNi].lineStart
-    let maxHS = 0;
+    let maxTHS = 0;
+    let maxBHS = 0;
     for(let j = lastNi; j < ni; j ++) {
-      let currHS = 0;
+      let currTHS = 0;
+      let currBHS = 0;
       const note = notes[j]
       if(note.octave > 2) {
-        currHS += ((note.octave - 2) / 2)
+        currTHS += ((note.octave - 2) / 2)
       }
       if(note.slur || note.tie) {
-        currHS += 2
+        currTHS += 4
       }
       if(note.tempoPerMeasure || note.baseTune || note.speed) {
-        currHS += 5
+        currTHS += 12
       }
-      maxHS = Math.max(maxHS, currHS)
+      maxTHS = Math.max(maxTHS, currTHS)
+      maxBHS = Math.max(maxBHS, currBHS)
     }
-    lineStart.heightSpace = baseLineHeightSpace + maxHS
+    lineStart.heightSpace = baseLineHeightSpace + maxTHS + maxBHS
+    lineStart.heightTS = maxTHS
+    lineStart.heightBS = maxBHS
     lastNi = ni;
   }
   // for(const ni of lineIndex) {

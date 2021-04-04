@@ -105,7 +105,7 @@ const Score = ({
     }
   )
   const xPadding = size * LINE_X_PADDING_SEED;
-  const yTopMargin = 20;
+  const yTopMargin = 0;
   return <div>{
     pageIndex.map((pi, k) => <div key={k}>
       <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={pageCntWidth} height={pageCntHeight}>
