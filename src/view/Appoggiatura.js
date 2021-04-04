@@ -59,9 +59,10 @@ const Appoggiatura = ({note, sizeRatio}) => {
   const ubX1 = midX + underBarLen;
   const ubY0 = midY + (sizeRatio * UNDER_BAR_Y_SEED);
   const apgSizeRatio = sizeRatio * 0.5;
-  const apgW = apg.length * apgSizeRatio * APG_FONT_WIDTH_SEED;
+  const apgFontW = apgSizeRatio * APG_FONT_WIDTH_SEED;
+  const apgW = apg.length * apgFontW;
   const apgH = apgSizeRatio * APG_FONT_HEIGHT_SEED;
-  const apgX = midX - (0.5 * apgW);
+  const apgX = midX - (0.5 * apgW) // - (apgFontW * 0.3);
   const apgY = midY - apgH; 
   const [
     apgNotes, measureIndex, 
