@@ -1,6 +1,6 @@
 
 
-const pageSpaceAnalysis = (notes, pageCntHeightSpace) => {
+const pageSpaceAnalysis = (notes, pageCntHeightSpace, spHSMapping = []) => {
   if(notes.length < 2) return [notes, []];
   let note = notes[0];
   let noteI = 0;
@@ -8,15 +8,18 @@ const pageSpaceAnalysis = (notes, pageCntHeightSpace) => {
   let pageStartI = 0;
   let currHS = 0;
   let pageIndex = []
+  let pageID = 0;
   while(note.lineStart !== undefined) { 
     // epsilon should not have lineStart
     const {heightSpace, next} = note.lineStart
     const tmpHS = currHS + heightSpace
-    if(tmpHS > pageCntHeightSpace) {
+    const HSLimit = spHSMapping[pageID] ? spHSMapping[pageID] : pageCntHeightSpace 
+    if(tmpHS > HSLimit) {
       pageStart.pageStart = {
         next: noteI
       }
       pageIndex.push(pageStartI)
+      pageID ++;
       pageStart = note;
       pageStartI = noteI;
       currHS = heightSpace;
@@ -31,8 +34,10 @@ const pageSpaceAnalysis = (notes, pageCntHeightSpace) => {
       next: noteI
     }
     pageIndex.push(pageStartI)
+    pageID ++;
   }
   pageIndex.push(noteI)
+  pageID ++;
   return [notes, pageIndex];
 }
 

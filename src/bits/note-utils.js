@@ -1,7 +1,7 @@
-import {rectUnion} from './utils'
+import {rectUnion, fontSizeToHeight} from './utils'
 const KEY_ASCENT_SIGN = ['\u266D', '\u266F', '\u266E'] // b, #, recover
 const FONT_SIZE_SEED                = 3.5     ;
-const FONT_HEIGHT_SEED              = FONT_SIZE_SEED * 0.713 ;
+const FONT_HEIGHT_SEED              = fontSizeToHeight(FONT_SIZE_SEED);
 const FONT_WIDTH_SEED               = FONT_SIZE_SEED * 0.54  ;
 const OCTAVE_DOT_SP_SEED            =  1.0   ; // THE SPACE BETween dot
 const OCTAVE_DOT_R_SEED             = FONT_SIZE_SEED * 0.07  ;

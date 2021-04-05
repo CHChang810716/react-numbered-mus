@@ -6,6 +6,8 @@ import pageSpaceAnalysis from '../bits/page-space-analysis'
 import Page from './Page'
 import { pagePositionAnalysis } from '../bits/position-analysis'
 import { curveIndex } from '../bits/note-utils'
+import { Header, HEADER_HEIGHT_SEED } from './Header'
+
 
 const BASE_LINE_HEIGHT_SEED = 20
 const LINE_X_PADDING_SEED = 5;
@@ -61,18 +63,20 @@ const notesSpaceAnalysis = (
   notes, {
     pageCntHeight,
     maxLineWeight,
-    size
+    size,
+    spPageCntHMap
   }
 ) => {
   for(let i = 0; i < notes.length; i ++) {
     notes[i].id = i;
   }
   const pageCntHeightSpace = pageCntHeight/ size
+  const spPageCntHS = spPageCntHMap.map(n => n / size);
   const [notes0, measureIndex] = measureSpaceAnalysis(notes);
   const [notes1, lineIndex] = lineSpaceAnalysis(
     notes0, measureIndex, maxLineWeight, BASE_LINE_HEIGHT_SEED
   );
-  const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace)
+  const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace, spPageCntHS)
 
   // annotation analysis
   const notes3 = underBarAnalysis(notes2);
@@ -84,6 +88,8 @@ const Score = ({
   pageCntHeight,
   maxLineWeight, 
   size,
+  title = "untitled",
+  renderHeader = false
 }) => {
   const sNotes = score.notes;
   if(!sNotes[sNotes.length - 1].epsilon) {
@@ -92,6 +98,13 @@ const Score = ({
       noteType: 1, 
       epsilon: true
     })
+  }
+  const headerHeight = HEADER_HEIGHT_SEED * size;
+  const spPageCntHMap = []
+  if(renderHeader) {
+    spPageCntHMap.push(
+      pageCntHeight - headerHeight
+    )
   }
   const [
     notes, measureIndex, 
@@ -102,24 +115,45 @@ const Score = ({
       pageCntHeight,
       maxLineWeight, 
       size,
+      spPageCntHMap
     }
   )
   const xPadding = size * LINE_X_PADDING_SEED;
   const yTopMargin = 0;
   return <div>{
-    pageIndex.map((pi, k) => <div key={k}>
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={pageCntWidth} height={pageCntHeight}>
-        <Page 
-          notes={notes}
-          startNoteI={pi}
-          x={xPadding}
-          y={yTopMargin}
-          cntWidth={pageCntWidth - (2 * xPadding)}
-          cntHeight={pageCntHeight - (2 * yTopMargin)}
-          sizeRatio={size}
-        />
-      </svg>
-    </div>)
+    pageIndex.map((pi, k) => {
+      if(notes[pi].epsilon) return null
+      const cntWidth  = pageCntWidth - (2 * xPadding);
+      let   cntHeight = pageCntHeight - (2 * yTopMargin);
+      const x = xPadding
+      let   y = yTopMargin
+      const needRenderHeader = k === 0 && renderHeader
+      if(needRenderHeader) {
+        cntHeight -= headerHeight;
+        y += headerHeight;
+      }
+      return <div key={k}>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={pageCntWidth} height={pageCntHeight}>
+          {needRenderHeader && <Header 
+            x={x}
+            y={yTopMargin}
+            width={pageCntWidth}
+            height={headerHeight}
+            title={title}
+            sizeRatio={size}
+          />}
+          <Page 
+            notes={notes}
+            startNoteI={pi}
+            x={x}
+            y={y}
+            cntWidth={cntWidth}
+            cntHeight={cntHeight}
+            sizeRatio={size}
+          />
+        </svg>
+      </div>
+    })
   }</div>
 }
 export default Score

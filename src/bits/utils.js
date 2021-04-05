@@ -28,4 +28,24 @@ const gnrlFontStyle = {
   fontWeight: 'bold'
 }
 
-export {rectUnion, svgDbg, QCurve, gnrlFontStyle}
+const fontSizeToHeight = (size) => {
+  return size * 0.713;
+}
+const fontHeightToSize = (h) => {
+  return h * 1.4025;
+}
+const fontSizeToWidth = (size) => {
+  return size * 0.54;
+}
+const fontWidthToSize = (w) => {
+  return w * 1.852;
+}
+
+export {
+  rectUnion, svgDbg, 
+  QCurve, gnrlFontStyle,
+  fontSizeToHeight,
+  fontSizeToWidth,
+  fontHeightToSize,
+  fontWidthToSize,
+}
