@@ -21,6 +21,8 @@ import { Stacc } from './Stacc'
 import { Marcato } from './Marcato'
 import { zip } from 'zip-array'
 import { Tremolo } from './Tremolo'
+import { not } from 'mathjs'
+import SectionID from './SectionID'
 
 const Page = ({
   notes, 
@@ -60,6 +62,14 @@ const Page = ({
       }
       if(note.loopEnd) {
         noteViews.push(<LoopEnd x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
+      }
+      if(note.sectionID) {
+        noteViews.push(<SectionID 
+          key={k++}
+          id={note.sectionID}
+          x={x} y={y}
+          sizeRatio={sizeRatio}
+        />)
       }
     }
     if(note.lineStart && renderMeasureBar) {
