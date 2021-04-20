@@ -8,6 +8,7 @@ import { pagePositionAnalysis } from '../bits/position-analysis'
 import { curveIndex } from '../bits/note-utils'
 import { Header, HEADER_HEIGHT_SEED } from './Header'
 import { fontSizeToHeight } from '../bits/utils'
+import setPointAnalysis from '../bits/set-point-analysis'
 
 
 const BASE_LINE_HEIGHT_SEED = 20
@@ -80,8 +81,9 @@ const notesSpaceAnalysis = (
   const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace, spPageCntHS)
 
   // annotation analysis
-  const notes3 = underBarAnalysis(notes2);
-  return [notes3, measureIndex, lineIndex, pageIndex];
+  const notes3 = setPointAnalysis(notes2)
+  const notes4 = underBarAnalysis(notes3);
+  return [notes4, measureIndex, lineIndex, pageIndex];
 }
 const PAGE_ID_FONT_SIZE_SEED = 3
 const PAGE_ID_FONT_H_SEED = fontSizeToHeight(PAGE_ID_FONT_SIZE_SEED)
