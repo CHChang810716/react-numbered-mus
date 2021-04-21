@@ -28,10 +28,14 @@ const LineNImpl = ({xi, yi, sizeRatio, spanY0}) => {
 const LineN = ({xi, yi, sizeRatio, n}) => {
   return LineNImpl({xi, yi, sizeRatio, 
     spanY0: (yi, tremoloDy) => {
+      let keys = []
+      for(let i = 0; i < n; i ++) {
+        keys.push(i)
+      }
       if(n < 3) {
-        return [...Array(n).keys()].map( i => yi + ((i + 1) * tremoloDy))
+        return keys.map( i => yi + ((i + 1) * tremoloDy))
       } else {
-        return [...Array(n).keys()].map( i => yi + (i * tremoloDy))
+        return keys.map( i => yi + (i * tremoloDy))
       }
     }
   })
