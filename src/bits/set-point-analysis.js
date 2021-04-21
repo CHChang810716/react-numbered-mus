@@ -15,16 +15,13 @@ const setPointAnalysis = (notes) => {
       currTempo = 0
     }
     if(currTempo === 0) {
-      console.log('add set point')
       note.setPoint = true;
     }
     if(note.noteType === undefined) {
       currTempo = 0
       continue;
     }
-    console.log(`noteType: ${note.noteType}`)
     currTempo += ( noteTypePerTempo / note.noteType );
-    console.log(`currTempo: ${currTempo}`)
     if(currTempo - Math.floor(currTempo) < 0.0001) {
       currTempo = 0;
     }
