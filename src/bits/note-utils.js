@@ -47,15 +47,45 @@ const underBarLayout = (
   return [x0, x1, y]
 }
 
+const hSegmentation = (noteType, halfPoint, width) => {
+  const extNum = extAnalysis(noteType);
+  const noteExtSize = 9;
+  const halfPointSize = 5;
+  let res = [noteExtSize]
+  for(let i = 0; i < extNum; i ++) {
+    res.push(noteExtSize + res[res.length - 1])
+  }
+  for(let i = 0; i < halfPoint; i ++) {
+    res.push(halfPointSize + res[res.length - 1])
+  }
+  const total = (noteExtSize * (1 + extNum)) + (halfPointSize * halfPoint);
+  const unit = width / total;
+  return res.map(n => n * unit)
+}
+
+const cpKeyPos = (outRect, sizeRatio) => {
+  const keyX = outRect.x + (outRect.width  / 2) - (1 * sizeRatio);
+  const keyY = outRect.y + (outRect.height / 2) + (1 * sizeRatio);
+  return [keyX, keyY]
+}
+
 const noteLayout = (
   x, y, noteWidth, noteHeight, 
   sizeRatio, octave, underBar, 
   noteType, halfPoint
 ) => {
   if(halfPoint === undefined) halfPoint = 0;
-
-  let   keyX = x + (noteWidth / 2) - (1 * sizeRatio);
-  const keyY = y + (noteHeight / 2) + (1 * sizeRatio);
+  const segs = hSegmentation(noteType, halfPoint, noteWidth);
+  // if(halfPoint > 0) {
+  //   console.log(segs)
+  // }
+  
+  const outKeyRect = {
+    x: x, y: y,
+    width: segs[0],
+    height: noteHeight
+  }
+  const [keyX, keyY] = cpKeyPos(outKeyRect, sizeRatio);
 
   const fontSize            = FONT_SIZE_SEED    * sizeRatio;
   const fontHeight          = FONT_HEIGHT_SEED  * sizeRatio;
@@ -72,12 +102,12 @@ const noteLayout = (
   const underBarNum = underBar ? underBar.num : 0;
   const [_0, _1, underBarY] = underBarLayout(keyRect, keyRect, underBarNum - 1, sizeRatio)
 
-  let   octaveDotX          = keyX + (OCTAVE_DOT_X_SEED * sizeRatio);
+  const octaveDotX          = keyX + (OCTAVE_DOT_X_SEED * sizeRatio);
   const octaveDotR          = OCTAVE_DOT_R_SEED * sizeRatio;
   const firstUpOctaveDotY   = keyY + (FIRST_UP_OCTAVE_DOT_Y_SEED * sizeRatio);
   const firstDownOctaveDotY = underBarY + (FIRST_DOWN_OCTAVE_DOT_Y_SEED * sizeRatio);
   const ascentSize          = sizeRatio * ASCENT_SIZE_SEED;
-  let   ascentX             = keyX + (sizeRatio * ASCENT_X_SEED);
+  const ascentX             = keyX + (sizeRatio * ASCENT_X_SEED);
   const ascentY             = keyY + (sizeRatio * ASCENT_Y_SEED);
   const ascentHeight        = sizeRatio * ASCENT_HEIGHT_SEED;
   const ascentWidth         = sizeRatio * ASCENT_WIDTH_SEED ;
@@ -116,22 +146,36 @@ const noteLayout = (
   const extDash       = EXT_DASH_SEED * sizeRatio;
   const extDashSp     = EXT_DASH_SP_SEED * sizeRatio;
   const halfPointR    = HALF_POINT_R_SEED * sizeRatio;
+  const halfPointW    = 2 * halfPointR; 
 
-  const extendDash = extAnalysis(noteType)
+  const extendDashN   = extAnalysis(noteType)
   const extDashY      = sizeRatio * EXT_DASH_Y_SEED + keyY;
   const extDashXs     = [];
-  const extDashStart  = keyRect.x + keyRect.width + extDashSp;
-  const extDashXDis   = extDashSp + extDash;
-  for(let i = 0; i < extendDash; i ++ ) {
-    extDashXs.push(extDashStart + ( extDashXDis * i));
+  const extDashStart  = x + segs[0];
+  for(let i = 0; i < extendDashN; i ++ ) {
+    const segX = segs[i]
+    const segW = segs[i + 1] - segX
+    let extSp = extDashSp / 2;
+    if(segW > extDash) {
+      extSp = (segW - extDash) / 2;
+    }
+    const extDashX = x + segX + extSp;
+    extDashXs.push(extDashX);
   }
   
-  const halfPointStart  = extDashStart + ( extDashXs.length * extDashXDis);
+  const halfPointStart  = x + segs[extendDashN];
   const halfPointY      = extDashY;
   const halfPointSp     = extDashSp;
   const halfPointXs     = [];
   for(let i = 0; i < halfPoint; i ++) {
-    halfPointXs.push(halfPointStart + (halfPointSp * i));
+    const segX = segs[extendDashN + i]
+    const segW = segs[extendDashN + i + 1] - segX
+    let hpSp = halfPointSp / 2;
+    if(segW > halfPointW) {
+      hpSp = (segW - halfPointW) / 2;
+    }
+    const hpX = x + segX + hpSp;
+    halfPointXs.push(hpX);
   }
   let xRBound = 0;
   if(extDashXs.length > 0) {
@@ -150,21 +194,6 @@ const noteLayout = (
     rects.push(ehRect);
   }
   const noteRect = rectUnion(rects)
-  const leftAlign = x + ((noteWidth - noteRect.width ) / 2)
-  const leftShift = leftAlign - noteRect.x
-  keyX              += leftShift
-  ascentX           += leftShift
-  keyRect.x         += leftShift
-  ascentRect.x      += leftShift
-  octaveDotX        += leftShift
-  octaveDotsRect.x  += leftShift
-  noteRect.x        += leftShift
-  for(let i = 0; i < extDashXs.length; i ++) {
-    extDashXs[i] += leftShift
-  }
-  for(let i = 0; i < halfPointXs.length; i ++) {
-    halfPointXs[i] += leftShift
-  }
   const outRect = {
     x: x, y: y, 
     width: noteWidth, height: noteHeight
@@ -175,7 +204,8 @@ const noteLayout = (
     ascentX, ascentY, ascentRect, 
     octaveDotX, octaveDotYs, octaveDotR, octaveDotsRect,
     extDashXs, extDashY, extDash, 
-    halfPointXs, halfPointY, halfPointR
+    halfPointXs, halfPointY, halfPointR,
+    segs
   }
 }
 const ascentSign = (ascent) => {
