@@ -31,7 +31,7 @@ const underBarAnalysis = (notes) => {
         lastNote.underBar.flag[i] |= 2;
       }
     }
-    if(note.measureStart) {
+    if(note.measureStart || note.setPoint) {
       for(let i = 0; i < lastUnderBarNum; i ++) {
         if(lastNote.underBar.flag[i] === undefined) {
           lastNote.underBar.flag[i] = 0;

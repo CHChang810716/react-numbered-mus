@@ -58,10 +58,10 @@ const Page = ({
       noteViews.push(<line key={k++} x1={x+w} y1={y} x2={x+w} y2={y+h} style={underBarStyle}/>)
       noteViews.push(<MeasureID key={k++} note={note} sizeRatio={sizeRatio} />)
       if(note.loopBegin) {
-        noteViews.push(<LoopBegin x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
+        noteViews.push(<LoopBegin key={k++} x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
       }
       if(note.loopEnd) {
-        noteViews.push(<LoopEnd x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
+        noteViews.push(<LoopEnd key={k++} x={x} y={y} w={w} h={h} sizeRatio={sizeRatio}/>)
       }
       if(note.sectionID) {
         noteViews.push(<SectionID 
@@ -142,8 +142,8 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  return     <g name={name}>
-      {noteViews}
-    </g>
+  return <g name={name}>
+    {noteViews}
+  </g>
 }
 export default Page

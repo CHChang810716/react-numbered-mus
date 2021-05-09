@@ -7,6 +7,8 @@ import Page from './Page'
 import { pagePositionAnalysis } from '../bits/position-analysis'
 import { curveIndex } from '../bits/note-utils'
 import { Header, HEADER_HEIGHT_SEED } from './Header'
+import { fontSizeToHeight } from '../bits/utils'
+import setPointAnalysis from '../bits/set-point-analysis'
 
 
 const BASE_LINE_HEIGHT_SEED = 20
@@ -79,17 +81,20 @@ const notesSpaceAnalysis = (
   const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace, spPageCntHS)
 
   // annotation analysis
-  const notes3 = underBarAnalysis(notes2);
-  return [notes3, measureIndex, lineIndex, pageIndex];
+  const notes3 = setPointAnalysis(notes2)
+  const notes4 = underBarAnalysis(notes3);
+  return [notes4, measureIndex, lineIndex, pageIndex];
 }
+const PAGE_ID_FONT_SIZE_SEED = 3
+const PAGE_ID_FONT_H_SEED = fontSizeToHeight(PAGE_ID_FONT_SIZE_SEED)
 const Score = ({
   score,
-  pageCntWidth,
-  pageCntHeight,
+  pageWidth,
+  pageHeight,
   maxLineWeight, 
   size,
-  title = "untitled",
-  renderHeader = false
+  renderHeader = false,
+  renderPageID = false
 }) => {
   const sNotes = score.notes;
   if(!sNotes[sNotes.length - 1].epsilon) {
@@ -99,11 +104,20 @@ const Score = ({
       epsilon: true
     })
   }
+  const title = score.title ? score.title : "untitled";
   const headerHeight = HEADER_HEIGHT_SEED * size;
+  const pageIDFontSize = PAGE_ID_FONT_SIZE_SEED * size;
+  const pageIDFontH = PAGE_ID_FONT_H_SEED * size;
   const spPageCntHMap = []
+  const xPadding = size * LINE_X_PADDING_SEED;
+  const cntWidth  = pageWidth - (2 * xPadding);
+  let cntHeight = pageHeight
+  if(renderPageID) {
+    cntHeight -= pageIDFontH
+  }
   if(renderHeader) {
     spPageCntHMap.push(
-      pageCntHeight - headerHeight
+      cntHeight - headerHeight
     )
   }
   const [
@@ -111,33 +125,30 @@ const Score = ({
     lineIndex, pageIndex
   ] = notesSpaceAnalysis(
     score.notes,{
-      pageCntWidth,
-      pageCntHeight,
+      pageCntWidth: cntWidth,
+      pageCntHeight: cntHeight,
       maxLineWeight, 
       size,
       spPageCntHMap
     }
   )
-  const xPadding = size * LINE_X_PADDING_SEED;
-  const yTopMargin = 0;
   return <div>{
     pageIndex.map((pi, k) => {
       if(notes[pi].epsilon) return null
-      const cntWidth  = pageCntWidth - (2 * xPadding);
-      let   cntHeight = pageCntHeight - (2 * yTopMargin);
       const x = xPadding
-      let   y = yTopMargin
+      let   y = 0 
+      let   height = cntHeight
       const needRenderHeader = k === 0 && renderHeader
       if(needRenderHeader) {
-        cntHeight -= headerHeight;
+        height -= headerHeight;
         y += headerHeight;
       }
       return <div key={k}>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={pageCntWidth} height={pageCntHeight}>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={pageWidth} height={pageHeight}>
           {needRenderHeader && <Header 
             x={x}
-            y={yTopMargin}
-            width={pageCntWidth}
+            y={0}
+            width={pageWidth}
             height={headerHeight}
             title={title}
             sizeRatio={size}
@@ -148,9 +159,18 @@ const Score = ({
             x={x}
             y={y}
             cntWidth={cntWidth}
-            cntHeight={cntHeight}
+            cntHeight={height}
             sizeRatio={size}
           />
+          {renderPageID && <text 
+              x={x + (cntWidth / 2)} 
+              y={pageHeight} 
+              fontSize={pageIDFontSize}
+              textAnchor="middle"
+            >
+              {k + 1}/{pageIndex.length - 1}
+            </text>
+          }
         </svg>
       </div>
     })
