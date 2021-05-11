@@ -23,6 +23,7 @@ import { zip } from 'zip-array'
 import { Tremolo } from './Tremolo'
 import { not } from 'mathjs'
 import SectionID from './SectionID'
+import {BasicFermata, Fermata} from './Fermata'
 
 const Page = ({
   notes, 
@@ -139,6 +140,10 @@ const Page = ({
     sizeRatio={sizeRatio} 
   />)
   noteViews = noteViews.concat(<Tremolo  key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio} 
+  />)
+  noteViews = noteViews.concat(<Fermata  key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
