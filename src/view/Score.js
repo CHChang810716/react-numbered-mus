@@ -31,7 +31,7 @@ const LINE_X_PADDING_SEED = 5;
  *      measureStart: true, // measure start
  *      tempoPerMeasure: 4,
  *      noteTypePerTempo: 4,
- *      baseTune: D,
+ *      baseTune: 'D',
  *      speed: 80,
  *      slur: {
  *        flag: <true/false>,
@@ -79,7 +79,6 @@ const notesSpaceAnalysis = (
     notes0, measureIndex, maxLineWeight, BASE_LINE_HEIGHT_SEED
   );
   const [notes2, pageIndex] = pageSpaceAnalysis(notes1, pageCntHeightSpace, spPageCntHS)
-
   // annotation analysis
   const notes3 = setPointAnalysis(notes2)
   const notes4 = underBarAnalysis(notes3);

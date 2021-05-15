@@ -1,8 +1,4 @@
-import React from 'react'
-// import styles from './styles.module.css'
 import Score from './view/Score'
+import NumStaffScore from './view/NumStaffScore'
 
-// export const ExampleComponent = ({ text }) => {
-//   return <div className={styles.test}>Example Component: {text}</div>
-// }
-export { Score }
+export { Score, NumStaffScore }
