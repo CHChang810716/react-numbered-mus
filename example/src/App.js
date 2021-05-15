@@ -1,5 +1,5 @@
 import React from 'react'
-import {Score} from 'react-numbered-mus'
+import {NumStaffScore, Score} from 'react-numbered-mus'
 const measureStart = (keyTxt, nt, octave, optional) => {
   return Object.assign(note(keyTxt, nt, octave, {
     measureStart: true
@@ -90,10 +90,12 @@ const App = () => {
   return <div className="App">
     <Score 
       score={score}
-      pageCntWidth={950}
-      pageCntHeight={300}
-      maxLineWeight={7.5}
+      pageWidth={(210 - 10)*5}
+      pageHeight={(297 - 10)*5}
+      maxLineWeight={7.81}
       size={5} 
+      renderHeader={false}
+      renderPageID={true} 
     />
   </div>
 }
