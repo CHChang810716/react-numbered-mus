@@ -19,25 +19,27 @@ const BL2_LABLE_WIDTH_SEEDS = {
   fff: 6,
 }
 
-const BL2Label = ({notes, startNoteI, endNoteI, sizeRatio, ntProp}) => {
+const BL2Label = ({notes, startNoteI, endNoteI, sizeRatio}) => {
   const res = []
   let k = 0;
   for(let i = startNoteI; i < endNoteI; i ++) {
     const note = notes[i]
-    if(note[ntProp] === undefined) continue;
-    const tL2LabelWidth = BL2_LABLE_WIDTH_SEEDS[ntProp] * sizeRatio;
-    const kr = note.pos.keyRect
-    const nx = kr.x + (kr.width / 2)
-    const ny = kr.y + (kr.height / 2)
-    const x = nx + (NOTE_BTN_L2_X_SEED * sizeRatio) + note.bl2Pos.x
-    const y = ny + (NOTE_BTN_L2_Y_SEED * sizeRatio)
-    const fontSize = BL2_LABLE_FONT_SIZE_SEED * sizeRatio
-    const txt = note[ntProp].txt ? note[ntProp].txt : ntProp
-    res.push(<text key={k++} x={x} y={y} fontSize={fontSize} style={gnrlFontStyle}>
-      {txt}
-    </text>)
-    // res.push(<line key={k++} x1={x + tL2LabelWidth} x2={x + tL2LabelWidth} y1={y} y2={y + 10} style={underBarStyle}/>)
-    note.bl2Pos.x += tL2LabelWidth;
+    let noteBL2Pos = note.bl2Pos.x;
+    for(const ntProp in BL2_LABLE_WIDTH_SEEDS) {
+      if(note[ntProp] === undefined) continue;
+      const bL2LabelWidth = BL2_LABLE_WIDTH_SEEDS[ntProp] * sizeRatio;
+      const kr = note.pos.keyRect
+      const nx = kr.x + (kr.width / 2)
+      const ny = kr.y + (kr.height / 2)
+      const x = nx + (NOTE_BTN_L2_X_SEED * sizeRatio) + note.bl2Pos.x
+      const y = ny + (NOTE_BTN_L2_Y_SEED * sizeRatio)
+      const fontSize = BL2_LABLE_FONT_SIZE_SEED * sizeRatio
+      const txt = note[ntProp].txt ? note[ntProp].txt : ntProp
+      noteBL2Pos += bL2LabelWidth;
+      res.push(<text key={k++} x={x} y={y} fontSize={fontSize} style={gnrlFontStyle}>
+        {txt}
+      </text>)
+    }
   }
   return res
 }
