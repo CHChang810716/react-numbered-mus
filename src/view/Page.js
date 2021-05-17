@@ -24,6 +24,7 @@ import { Tremolo } from './Tremolo'
 import { not } from 'mathjs'
 import SectionID from './SectionID'
 import {BasicFermata, Fermata} from './Fermata'
+import MeasureNotations from './MeasureNotations'
 
 const Page = ({
   notes, 
@@ -98,15 +99,19 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  noteViews = noteViews.concat(<Clef    key={k++}
-    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
-    sizeRatio={sizeRatio} 
-  />)
-  noteViews = noteViews.concat(<TimeSig key={k++}
-    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
-    sizeRatio={sizeRatio} 
-  />)
-  noteViews = noteViews.concat(<Speed   key={k++} 
+  // noteViews = noteViews.concat(<Clef    key={k++}
+  //   notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+  //   sizeRatio={sizeRatio} 
+  // />)
+  // noteViews = noteViews.concat(<TimeSig key={k++}
+  //   notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+  //   sizeRatio={sizeRatio} 
+  // />)
+  // noteViews = noteViews.concat(<Speed   key={k++} 
+  //   notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+  //   sizeRatio={sizeRatio} 
+  // />)
+  noteViews = noteViews.concat(<MeasureNotations key={k++}
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)

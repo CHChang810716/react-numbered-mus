@@ -31,7 +31,7 @@ const BL2Label = ({notes, startNoteI, endNoteI, sizeRatio}) => {
       const kr = note.pos.keyRect
       const nx = kr.x + (kr.width / 2)
       const ny = kr.y + (kr.height / 2)
-      const x = nx + (NOTE_BTN_L2_X_SEED * sizeRatio) + note.bl2Pos.x
+      const x = nx + (NOTE_BTN_L2_X_SEED * sizeRatio) + noteBL2Pos
       const y = ny + (NOTE_BTN_L2_Y_SEED * sizeRatio)
       const fontSize = BL2_LABLE_FONT_SIZE_SEED * sizeRatio
       const txt = note[ntProp].txt ? note[ntProp].txt : ntProp
