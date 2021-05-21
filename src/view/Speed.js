@@ -7,6 +7,12 @@ import {
 } from '../bits/note-utils'
 const SPEED_FONT_SIZE_SEED = MEASURE_NOTATION_FSIZE_SEED;
 const SPEED_WIDTH_SEED = SPEED_FONT_SIZE_SEED * 2.6;
+/**
+ * speedType: {
+ *  noteType: <1/2/4/8...>,
+ *  halfPoint: <int>
+ * }
+ */
 const Speed = ({notes, startNoteI, endNoteI, sizeRatio}) => {
   const res = []
   let k = 0;
