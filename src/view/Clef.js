@@ -13,10 +13,7 @@ const Clef = ({notes, startNoteI, endNoteI, sizeRatio}) => {
   for(let i = startNoteI; i < endNoteI; i ++) {
     const note = notes[i]
     if(note.baseTune === undefined) continue;
-    if(note.measureNot === undefined) {
-      console.warn("baseTune prop should appear with measureStart")
-      continue;
-    }
+    if(note.measureNot === undefined) continue;
     const clefWidth = CLEF_WIDTH_SEED * sizeRatio;
     const [mx, my, mw, mh] = note.measurePos
     const x = mx + (MEASURE_NOTATION_X_SEED * sizeRatio) + note.measureNot.x

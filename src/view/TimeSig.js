@@ -13,10 +13,7 @@ const TimeSig = ({notes, startNoteI, endNoteI, sizeRatio}) => {
   for(let i = startNoteI; i < endNoteI; i ++) {
     const note = notes[i]
     if(note.tempoPerMeasure === undefined) continue;
-    if(note.measureNot === undefined) {
-      console.warn("tempoPerMeasure prop should appear with measureStart")
-      continue;
-    }
+    if(note.measureNot === undefined)  continue;
     const timeSigWidth = TIME_SIG_WIDTH_SEED * sizeRatio;
     const [mx, my, mw, mh] = note.measurePos
     const x = mx + (MEASURE_NOTATION_X_SEED * sizeRatio) + note.measureNot.x

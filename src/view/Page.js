@@ -24,6 +24,7 @@ import { Tremolo } from './Tremolo'
 import { not } from 'mathjs'
 import SectionID from './SectionID'
 import {BasicFermata, Fermata} from './Fermata'
+import MeasureNotations from './MeasureNotations'
 
 const Page = ({
   notes, 
@@ -98,30 +99,30 @@ const Page = ({
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  noteViews = noteViews.concat(<Clef    key={k++}
+  // noteViews = noteViews.concat(<Clef    key={k++}
+  //   notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+  //   sizeRatio={sizeRatio} 
+  // />)
+  // noteViews = noteViews.concat(<TimeSig key={k++}
+  //   notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+  //   sizeRatio={sizeRatio} 
+  // />)
+  // noteViews = noteViews.concat(<Speed   key={k++} 
+  //   notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+  //   sizeRatio={sizeRatio} 
+  // />)
+  noteViews = noteViews.concat(<MeasureNotations key={k++}
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio} 
   />)
-  noteViews = noteViews.concat(<TimeSig key={k++}
+  noteViews = noteViews.concat(<TL2Label   key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
-    sizeRatio={sizeRatio} 
+    sizeRatio={sizeRatio}
   />)
-  noteViews = noteViews.concat(<Speed   key={k++} 
+  noteViews = noteViews.concat(<BL2Label   key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
-    sizeRatio={sizeRatio} 
+    sizeRatio={sizeRatio}
   />)
-  for(const label in TL2_LABLE_WIDTH_SEEDS) {
-    noteViews = noteViews.concat(<TL2Label   key={k++} 
-      notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
-      sizeRatio={sizeRatio} ntProp={label}
-    />)
-  }
-  for(const label in BL2_LABLE_WIDTH_SEEDS) {
-    noteViews = noteViews.concat(<BL2Label   key={k++} 
-      notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
-      sizeRatio={sizeRatio} ntProp={label}
-    />)
-  }
   
   noteViews = noteViews.concat(<Cresc  key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
