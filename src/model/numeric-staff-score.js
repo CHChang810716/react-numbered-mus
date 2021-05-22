@@ -1,4 +1,4 @@
-import { ascentNumToTune, ascentNumToTuneID, tuneShift, ascentForKey, ascentForNote } from "./tune-shift";
+import { ascentNumToTune, ascentNumToTuneID, tuneShift, ascentForKey, ascentForNote, keyShift } from "./tune-shift";
 
 /**
  * score = {
@@ -54,13 +54,35 @@ const keyTxtTransform = (tuneAscent, keyTxt, ascent) => {
   const toTune = ascentNumToTuneID(sign, num);
   const fromTune = 0;
   const shift = fromTune - toTune;
-  return tuneShift(keyTxt, ascent, shift)
+  return [0, 1 , null].map(
+    ahint => tuneShift(keyTxt, ascent, shift, ahint)
+  )
+}
+const keyShiftBasedFit = (ref, cands, keyShift) => {
+  const tRefTrans = ref.keyTxt - 1 + keyShift;
+  const refTrans = (tRefTrans < 0 ? tRefTrans + 7 : (tRefTrans % 7)) + 1;
+  for(const n of cands) {
+    if(n.keyTxt == refTrans) {
+      return n;
+    }
+  }
+  if(cands[2]) return cands[2]
+  if(cands[1]) return cands[1];
+  if(cands[0]) return cands[0];
 }
 const numericStaffScore = ({notes}) => {
   let currTuneAscent = {
     sign: undefined, num: 0
   };
-  let currContextAscent = undefined
+  const currContextAscent = [
+    null, null, null, null, 
+    null, null, null, null, 
+  ]
+  const outputContextAscent = [
+    null, null, null, null, 
+    null, null, null, null, 
+  ]
+  let currKeyShift = 0;
   for (const note of notes) {
     if(note.tuneAscent) {
       currTuneAscent = note.tuneAscent;
@@ -68,28 +90,42 @@ const numericStaffScore = ({notes}) => {
         note.tuneAscent.sign,
         note.tuneAscent.num
       )
+      currKeyShift = keyShift(note.baseTune)
       delete note.tuneAscent
     }
     if(note.measureStart) {
-      currContextAscent = undefined;
+      for(const i in currContextAscent) {
+        currContextAscent[i] = null
+      }
+      for(const i in outputContextAscent) {
+        outputContextAscent[i] = null
+      }
     }
     if(note.keyTxt === undefined) continue;
     if(note.keyTxt === 0) continue;
-    if(note.ascent) {
-      currContextAscent = note.ascent;
+    if(note.ascent !== undefined) {
+      currContextAscent[note.keyTxt] = note.ascent;
     }
     const noteAscent = ascentForNote(
-      currTuneAscent, note.keyTxt, note.ascent
+      currTuneAscent, note.keyTxt, currContextAscent[note.keyTxt]
     )
-    const {keyTxt, ascent, octaveShift} = keyTxtTransform(
+    const candTrans = keyTxtTransform(
       currTuneAscent, note.keyTxt, noteAscent
+    )
+    const {keyTxt, ascent, octaveShift} = keyShiftBasedFit(
+      note, candTrans, currKeyShift
     );
     note.keyTxt  = keyTxt
-    note.ascent = ascent
+    if(outputContextAscent[keyTxt] !== ascent) {
+      note.ascent = ascent
+      outputContextAscent[keyTxt] = ascent
+    }
     if(octaveShift != 0) {
       if(!note.octave) note.octave = 0;
       note.octave += octaveShift
     }
+    // if(note.measureStart) {
+    // }
   }
   return {notes}
 }

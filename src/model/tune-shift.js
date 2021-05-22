@@ -52,7 +52,7 @@ const toTwID = (key, ascent) => {
 }
 const toCatID = (_twid, ascentHint) => {
   const catEntry = catid[_twid];
-  if(ascentHint !== undefined) {
+  if(ascentHint !== undefined && ascentHint !== null) {
     const keyTxt = catEntry[ascentHint];
     if(keyTxt) return {
       keyTxt, 
@@ -144,12 +144,25 @@ const ascentForKey = (tuneAscent, key) => {
 }
 const ascentForNote = (tuneAscent, key, ascent) => {
   const ak = ascentForKey(tuneAscent, key);
-  if(ascent === undefined) return ak;
+  if(ascent === undefined || ascent === null) return ak;
   if(ascent === 2) return undefined;
   return ascent;
+}
+
+const keyShift = (baseTune) => {
+  const table = {
+    A: -5,
+    B: -6,
+    C:  0,
+    D: -1,
+    E: -2,
+    F: -3,
+    G: -4
+  }
+  return table[baseTune]
 }
 export {
   tuneShift, tuneCharShift, 
   ascentNumToTuneID, ascentNumToTune,
-  ascentForKey, ascentForNote
+  ascentForKey, ascentForNote, keyShift
 }
