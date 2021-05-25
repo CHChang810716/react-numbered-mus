@@ -70,19 +70,20 @@ const keyShiftBasedFit = (ref, cands, keyShift) => {
   if(cands[1]) return cands[1];
   if(cands[0]) return cands[0];
 }
-const numericStaffScore = ({notes}) => {
-  let currTuneAscent = {
+const numericStaffScore = ({notes}, 
+  currTuneAscent = {
     sign: undefined, num: 0
-  };
-  const currContextAscent = [
+  }, 
+  currContextAscent = [
     null, null, null, null, 
     null, null, null, null, 
-  ]
-  const outputContextAscent = [
+  ], 
+  outputContextAscent = [
     null, null, null, null, 
     null, null, null, null, 
-  ]
-  let currKeyShift = 0;
+  ],
+  currKeyShift = 0
+) => {
   for (const note of notes) {
     if(note.tuneAscent) {
       currTuneAscent = note.tuneAscent;
@@ -100,6 +101,12 @@ const numericStaffScore = ({notes}) => {
       for(const i in outputContextAscent) {
         outputContextAscent[i] = null
       }
+    }
+    if(note.apg) {
+      note.apg = numericStaffScore(
+        {notes: note.apg}, currTuneAscent, currContextAscent, 
+        outputContextAscent, currKeyShift
+      ).notes
     }
     if(note.keyTxt === undefined) continue;
     if(note.keyTxt === 0) continue;
