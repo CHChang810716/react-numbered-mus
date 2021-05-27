@@ -41,7 +41,7 @@ const catid = [
 ]
 
 const toTwID = (key, ascent) => {
-  if(ascent === undefined || ascent === null) {
+  if(ascent === undefined) {
     ascent = 2;
   }
   const res = twid[key][ascent];
@@ -52,7 +52,7 @@ const toTwID = (key, ascent) => {
 }
 const toCatID = (_twid, ascentHint) => {
   const catEntry = catid[_twid];
-  if(ascentHint !== undefined && ascentHint !== null) {
+  if(ascentHint !== undefined) {
     const keyTxt = catEntry[ascentHint];
     if(keyTxt) return {
       keyTxt, 
@@ -112,7 +112,7 @@ const ascentNumToTuneID = (ascentCode, num) => {
       `ascent to tune: ascent must be 0/1 but get: ${ascentCode}`
     ); 
   }
-  if(ascentCode === undefined || ascentCode === null) {
+  if(ascentCode === undefined) {
     return 0
   }
   return table[ascentCode][num]
@@ -144,7 +144,7 @@ const ascentForKey = (tuneAscent, key) => {
 }
 const ascentForNote = (tuneAscent, key, ascent) => {
   const ak = ascentForKey(tuneAscent, key);
-  if(ascent === undefined || ascent === null) return ak;
+  if(ascent === undefined) return ak;
   if(ascent === 2) return undefined;
   return ascent;
 }

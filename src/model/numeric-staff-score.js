@@ -54,7 +54,7 @@ const keyTxtTransform = (tuneAscent, keyTxt, ascent) => {
   const toTune = ascentNumToTuneID(sign, num);
   const fromTune = 0;
   const shift = fromTune - toTune;
-  return [0, 1 , null].map(
+  return [0, 1, undefined].map(
     ahint => tuneShift(keyTxt, ascent, shift, ahint)
   )
 }
@@ -75,12 +75,12 @@ const numericStaffScore = ({notes},
     sign: undefined, num: 0
   }, 
   currContextAscent = [
-    null, null, null, null, 
-    null, null, null, null, 
+    undefined, undefined, undefined, undefined, 
+    undefined, undefined, undefined, undefined, 
   ], 
   outputContextAscent = [
-    null, null, null, null, 
-    null, null, null, null, 
+    undefined, undefined, undefined, undefined, 
+    undefined, undefined, undefined, undefined, 
   ],
   currKeyShift = 0
 ) => {
@@ -96,10 +96,10 @@ const numericStaffScore = ({notes},
     }
     if(note.measureStart) {
       for(const i in currContextAscent) {
-        currContextAscent[i] = null
+        currContextAscent[i] = undefined
       }
       for(const i in outputContextAscent) {
-        outputContextAscent[i] = null
+        outputContextAscent[i] = undefined
       }
     }
     if(note.apg) {
@@ -124,7 +124,11 @@ const numericStaffScore = ({notes},
     );
     note.keyTxt  = keyTxt
     if(outputContextAscent[keyTxt] !== ascent) {
-      note.ascent = ascent
+      if(ascent === undefined) {
+        note.ascent = 2
+      } else {
+        note.ascent = ascent
+      }
       outputContextAscent[keyTxt] = ascent
     }
     if(octaveShift != 0) {
