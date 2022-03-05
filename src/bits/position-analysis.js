@@ -26,8 +26,6 @@ const measurePositionAnalysis = (
   const xPadding = ntSizeRatio * opt.MEASURE_X_PADDING_SEED;
   const measureY = y - (ntSizeRatio * (MEASURE_ID_Y_OFFSET_SEED - 3));
   // const measureY = y;
-  console.log(y)
-  console.log(measureY)
   const innerWidth = cntWidth - (2 * xPadding);
   let currX = x + xPadding;
   let ubStart = []
