@@ -1,8 +1,8 @@
 import React from 'react'
 import { underBarStyle } from '../bits/note-utils';
 import { svgDbg } from "../bits/utils";
+import { MEASURE_ID_Y_OFFSET_SEED } from '../bits/note-utils';
 const MEASURE_ID_SIZE_SEED = 3
-const MEASURE_ID_Y_OFFSET_SEED = -1.2
 
 const MeasureID = ({note, sizeRatio}) => {
   const [x, y, w, h] = note.measurePos

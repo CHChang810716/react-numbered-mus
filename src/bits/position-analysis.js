@@ -1,4 +1,4 @@
-import {noteLayout, underBarLayout} from './note-utils'
+import {noteLayout, underBarLayout, MEASURE_ID_Y_OFFSET_SEED} from './note-utils'
 
 const LINE_HEIGHT_SEED = 13;
 /**
@@ -24,6 +24,10 @@ const measurePositionAnalysis = (
   const startNote = notes[startNoteI]
   const endNoteI = startNote.measureStart.next
   const xPadding = ntSizeRatio * opt.MEASURE_X_PADDING_SEED;
+  const measureY = y - (ntSizeRatio * (MEASURE_ID_Y_OFFSET_SEED - 3));
+  // const measureY = y;
+  console.log(y)
+  console.log(measureY)
   const innerWidth = cntWidth - (2 * xPadding);
   let currX = x + xPadding;
   let ubStart = []
@@ -35,7 +39,7 @@ const measurePositionAnalysis = (
     const note = notes[noteI]
     const width = unitW * note.measureSpace
     const nl = noteLayout(
-      currX, y, 
+      currX, measureY, 
       width, cntHeight, 
       ntSizeRatio, 
       note.octave, note.underBar,
@@ -69,7 +73,7 @@ const measurePositionAnalysis = (
     }
     currX += width;
   }
-  return [x, y, cntWidth, cntHeight]
+  return [x, measureY, cntWidth, cntHeight]
 }
 const linePositionAnalysis = (
   startNoteI,

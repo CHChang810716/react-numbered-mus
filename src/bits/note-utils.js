@@ -30,6 +30,8 @@ const STACC_Y_SEED                  = -4.7;
 const MARCATO_Y_SEED                = -4.7;
 const NOTE_FERMATA_Y_SHIFT_SEED     = -3.3;
 
+const MEASURE_ID_Y_OFFSET_SEED      = -1.2;
+
 const extAnalysis = (noteType) => {
   switch(noteType) {
     case 1: return 3;
@@ -275,6 +277,7 @@ export {noteLayout, ascentSign, underBarStyle,
   NOTE_BTN_L2_X_SEED, NOTE_BTN_L2_Y_SEED,
   STACC_Y_SEED,
   MARCATO_Y_SEED,
-  NOTE_FERMATA_Y_SHIFT_SEED
+  NOTE_FERMATA_Y_SHIFT_SEED,
+  MEASURE_ID_Y_OFFSET_SEED
 }
 
