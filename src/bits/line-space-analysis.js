@@ -81,7 +81,7 @@ const lineYSpaceAnalysis = (
         currTHS += 4
       }
       if(note.tempoPerMeasure || note.baseTune || note.speed) {
-        currTHS += 12
+        currTHS = Math.max(8, currTHS)
       }
       maxTHS = Math.max(maxTHS, currTHS)
       maxBHS = Math.max(maxBHS, currBHS)

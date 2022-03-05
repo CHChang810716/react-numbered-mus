@@ -4,7 +4,7 @@ import { fontSizeToHeight, fontSizeToWidth, svgDbg } from '../bits/utils'
 const FONT_SIZE_SEED = 4
 const FONT_H_SEED = fontSizeToHeight(FONT_SIZE_SEED)
 const FONT_W_SEED = fontSizeToWidth(FONT_SIZE_SEED)
-const ID_Y_SHIFT_SEED = -4
+const ID_Y_SHIFT_SEED = -4.6
 const SectionID = ({id, x, y, sizeRatio}) => {
   const fontSize = sizeRatio * FONT_SIZE_SEED
   const fontH = sizeRatio * FONT_H_SEED

@@ -19,7 +19,7 @@ const EXT_DASH_SP_SEED              =  2.3  ;
 const HALF_POINT_R_SEED             = FONT_SIZE_SEED * 0.06  
 
 const MEASURE_NOTATION_X_SEED       = -3;
-const MEASURE_NOTATION_Y_SEED       = -6.3;
+const MEASURE_NOTATION_Y_SEED       = -9.6;
 const MEASURE_NOTATION_FSIZE_SEED   = 3.7;
 
 const NOTE_TOP_L2_Y_SEED            = -7;
