@@ -51,12 +51,9 @@ const score = {
       slur: [2]
     }),
     note(3, 4, 0, {
-      apg: [{
-        keyTxt: 2,
-        octave: 1,
+      apg: [measureStart(2, 8,{
         ascent: 0
-      }
-    ]
+      })]
     }),
     note(1, 4),
     measureStart(6, 4),
@@ -105,16 +102,17 @@ const App = () => {
   return <div className="App">
     <Score 
       score={score}
-      pageCntWidth={950}
-      pageCntHeight={300}
-      maxLineWeight={7.5}
+      pageWidth={(210 - 10)*5}
+      pageHeight={(297 - 10)*5}
+      maxLineWeight={7.81}
       size={5} 
+      renderHeader={false}
+      renderPageID={true} 
     />
   </div>
 }
 
 export default App
-
 ```
 
 ## Result

@@ -1,5 +1,5 @@
 import React from 'react'
-import {NumStaffScore, Score} from 'react-numbered-mus'
+import {Score} from 'react-numbered-mus'
 const measureStart = (keyTxt, nt, octave, optional) => {
   return Object.assign(note(keyTxt, nt, octave, {
     measureStart: true
@@ -36,12 +36,9 @@ const score = {
       slur: [2]
     }),
     note(3, 4, 0, {
-      apg: [{
-        keyTxt: 2,
-        octave: 1,
+      apg: [measureStart(2, 8,{
         ascent: 0
-      }
-    ]
+      })]
     }),
     note(1, 4),
     measureStart(6, 4),
