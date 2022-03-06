@@ -18,13 +18,15 @@ const measurePositionAnalysis = (
   y,
   ntSizeRatio,
   opt = {
-    MEASURE_X_PADDING_SEED: 2.3
+    MEASURE_X_PADDING_SEED: 2.3,
+    hasSectionID: true
   }
 ) => {
   const startNote = notes[startNoteI]
   const endNoteI = startNote.measureStart.next
   const xPadding = ntSizeRatio * opt.MEASURE_X_PADDING_SEED;
-  const measureY = y - (ntSizeRatio * (MEASURE_ID_Y_OFFSET_SEED - 3));
+  const measureY = y - (opt.hasSectionID ? (ntSizeRatio * (MEASURE_ID_Y_OFFSET_SEED - 3)) : 0);
+  // const measureY = y - (ntSizeRatio * (MEASURE_ID_Y_OFFSET_SEED - 3));
   // const measureY = y;
   const innerWidth = cntWidth - (2 * xPadding);
   let currX = x + xPadding;
@@ -82,7 +84,8 @@ const linePositionAnalysis = (
   y,
   ntSizeRatio,
   opt = {
-    MEASURE_X_PADDING_SEED: 2.3
+    MEASURE_X_PADDING_SEED: 2.3,
+    hasSectionID: true
   }
 ) => {
   const startNote = notes[startNoteI]
@@ -129,7 +132,8 @@ const pagePositionAnalysis = (
   cntHeight,
   sizeRatio,
   opt = {
-    MEASURE_X_PADDING_SEED: 2.3
+    MEASURE_X_PADDING_SEED: 2.3,
+    hasSectionID: true
   }
 ) => {
   if(notes[startNoteI].epsilon) return null

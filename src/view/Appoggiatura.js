@@ -82,6 +82,7 @@ const Appoggiatura = ({note, sizeRatio}) => {
       cntHeight={apgH}
       sizeRatio={apgSizeRatio}
       MEASURE_X_PADDING_SEED={0}
+      hasSectionID={false}
       renderMeasureBar={false}
       name="apg"
     />,

@@ -35,10 +35,11 @@ const Page = ({
   sizeRatio,
   name,
   renderMeasureBar = true,
-  MEASURE_X_PADDING_SEED = 2.3
+  MEASURE_X_PADDING_SEED = 2.3,
+  hasSectionID = true
 }) => {
   if(notes[startNoteI].epsilon) return null
-  pagePositionAnalysis(notes, startNoteI, x, y, cntWidth, cntHeight, sizeRatio, {MEASURE_X_PADDING_SEED})
+  pagePositionAnalysis(notes, startNoteI, x, y, cntWidth, cntHeight, sizeRatio, {MEASURE_X_PADDING_SEED, hasSectionID})
   let noteViews = []
   let k = 0;
   const endNoteI = notes[startNoteI].pageStart.next
