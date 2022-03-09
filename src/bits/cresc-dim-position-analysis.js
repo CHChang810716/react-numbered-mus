@@ -33,6 +33,8 @@ function* crescDimPositionAnalysis(notes, startNoteI, endNoteI, sizeRatio, ntPro
   let k = 0
   for(const crescDimID in index) {
     const {startNote, endNote, startLine, endLine} = index[crescDimID]
+    const crescdimS = startNote[ntProp]
+    const crescdimE = endNote[ntProp]
     if(startLine !== endLine) {
       if(startNote.id >= startNoteI && startNote.id < endNoteI) {
         const start = startNote.pos
@@ -64,8 +66,20 @@ function* crescDimPositionAnalysis(notes, startNoteI, endNoteI, sizeRatio, ntPro
         const start = startNote.pos
         const end = endNote.pos
         const startBR = rectUnion([start.keyRect, start.ascentRect, start.octaveDotsRect])
-        const x0 = start.keyRect.x + (start.keyRect.width / 2)
-        const x1 = end.keyRect.x + (end.keyRect.width / 2)
+        const x0 = (()=>{
+          if(typeof crescdimS.start != "boolean" && typeof crescdimS.start == "number") {
+            return start.noteRect.x + (start.noteRect.width * crescdimS.start)
+          } else {
+            return start.keyRect.x + (start.keyRect.width / 2)
+          }
+        })()
+        const x1 = (()=>{
+          if(typeof crescdimE.end != "boolean" && typeof crescdimE.end == "number") {
+            return end.noteRect.x + (end.noteRect.width * crescdimE.end)
+          } else {
+            return end.keyRect.x + (end.keyRect.width / 2)
+          }
+        })()
         const endBR = rectUnion([end.keyRect, end.ascentRect, end.octaveDotsRect])
         const y = Math.max(
           startBR.y + startBR.height, 
