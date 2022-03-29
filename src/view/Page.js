@@ -13,6 +13,7 @@ import Clef from './Clef'
 import TimeSig from './TimeSig'
 import Speed from './Speed'
 import { TL2Label, TL2_LABLE_WIDTH_SEEDS } from './TL2Label'
+import { TL1Label, TL1_LABLE_WIDTH_SEEDS } from './TL1Label'
 import Cresc from './Cresc'
 import Dim from './Dim'
 import { BL2Label, BL2_LABLE_WIDTH_SEEDS } from './BL2Label'
@@ -117,6 +118,10 @@ const Page = ({
     sizeRatio={sizeRatio} 
   />)
   noteViews = noteViews.concat(<TL2Label   key={k++} 
+    notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
+    sizeRatio={sizeRatio}
+  />)
+  noteViews = noteViews.concat(<TL1Label   key={k++} 
     notes={notes} startNoteI={startNoteI} endNoteI={endNoteI} 
     sizeRatio={sizeRatio}
   />)

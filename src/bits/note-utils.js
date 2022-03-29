@@ -22,6 +22,8 @@ const MEASURE_NOTATION_X_SEED       = -3;
 const MEASURE_NOTATION_Y_SEED       = -9.6;
 const MEASURE_NOTATION_FSIZE_SEED   = 3.7;
 
+const NOTE_TOP_L1_Y_SEED            = -4;
+const NOTE_TOP_L1_X_SEED            = -1.25;
 const NOTE_TOP_L2_Y_SEED            = -7;
 const NOTE_TOP_L2_X_SEED            = -3;
 const NOTE_BTN_L2_Y_SEED            =  6.5;
@@ -274,6 +276,7 @@ export {noteLayout, ascentSign, underBarStyle,
   MEASURE_NOTATION_X_SEED, MEASURE_NOTATION_Y_SEED,
   MEASURE_NOTATION_FSIZE_SEED,
   NOTE_TOP_L2_X_SEED, NOTE_TOP_L2_Y_SEED,
+  NOTE_TOP_L1_X_SEED, NOTE_TOP_L1_Y_SEED,
   NOTE_BTN_L2_X_SEED, NOTE_BTN_L2_Y_SEED,
   STACC_Y_SEED,
   MARCATO_Y_SEED,

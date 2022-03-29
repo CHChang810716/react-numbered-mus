@@ -65,6 +65,9 @@ const measurePositionAnalysis = (
       }
     }
     note.pos = nl
+    note.tl1Pos = {
+      x: 0
+    }
     note.tl2Pos = {
       x: 0
     }

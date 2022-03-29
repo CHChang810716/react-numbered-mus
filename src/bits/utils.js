@@ -27,6 +27,10 @@ const gnrlFontStyle = {
   fontStyle: 'italic',
   fontWeight: 'bold'
 }
+const boldFontStyle = {
+  fontFamily: 'serif',
+  fontWeight: 'bold'
+}
 
 const fontSizeToHeight = (size) => {
   return size * 0.713;
@@ -43,7 +47,7 @@ const fontWidthToSize = (w) => {
 
 export {
   rectUnion, svgDbg, 
-  QCurve, gnrlFontStyle,
+  QCurve, gnrlFontStyle, boldFontStyle,
   fontSizeToHeight,
   fontSizeToWidth,
   fontHeightToSize,
